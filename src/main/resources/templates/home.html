@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>IPLyC Backend | Home</title>
+</head>
+
+<body>
+
+	<span th:utext="${username}"></span>
+
+	<p th:utext="${homeMessage}"></p>
+
+	<form th:action="@{/usersList}" method="get">
+		<button name="usersList" type="Submit">Ver listado de usuarios</button>
+	</form>    
+	
+	<br>
+	
+	<form th:action="@{/logout}" method="get">
+		<button name="logout" type="Submit">Logout</button>
+	</form>  
+
+
+</body>
+</html>

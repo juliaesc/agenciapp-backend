@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>IPLyC Backend | List</title>
+</head>
+
+<body>
+
+	<p th:utext="${listMessage}"></p>
+	
+    <h3 th:text="Detalles"></h3>
+    <table>
+    	<tr>
+        	<th th:text="ID"/></th>
+        	<th th:text="Usuario"></th>
+        	<th th:text="Activo"></th>
+        	<th th:text="Nombre"></th>
+        	<th th:text="Apellido"></th>
+        	<th th:text="Email"></th>
+    	</tr>
+        <tr th:each="user : ${allUsers}">
+	    	<td th:text="${user.id}"></td>
+			<td th:text="${user.username}"></td>
+			<td th:text="${user.active}"></td>
+         	<td th:text="${user.firstName}"></td>
+        	<td th:text="${user.lastName}"></td>
+        	<td th:text="${user.email}"></td>	  		  
+	    </tr>	
+	</table>
+
+	<form th:action="@{/logout}" method="get">
+		<button name="logout" type="Submit">Logout</button>
+	</form>
+</body>
+</html>
