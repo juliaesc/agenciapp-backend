@@ -1,4 +1,4 @@
-package ar.com.buildingways.iplycbackend.service;
+package ar.com.buildingways.agenciapp.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ar.com.buildingways.iplycbackend.model.User;
-import ar.com.buildingways.iplycbackend.repository.UserRepository;
+import ar.com.buildingways.agenciapp.model.User;
+import ar.com.buildingways.agenciapp.repository.UserRepository;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{

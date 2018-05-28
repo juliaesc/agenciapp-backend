@@ -1,10 +1,10 @@
-package ar.com.buildingways.iplycbackend.service;
+package ar.com.buildingways.agenciapp.service;
 
 import java.util.Collection;
 
 import org.joda.time.DateTime;
 
-import ar.com.buildingways.iplycbackend.model.AccountActivity;
+import ar.com.buildingways.agenciapp.model.AccountActivity;
 
 public interface AccountActivityService {
 	

@@ -1,4 +1,4 @@
-package ar.com.buildingways.iplycbackend.model;
+package ar.com.buildingways.agenciapp.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

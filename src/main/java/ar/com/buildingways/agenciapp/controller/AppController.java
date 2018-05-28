@@ -1,4 +1,4 @@
-package ar.com.buildingways.iplycbackend.controller;
+package ar.com.buildingways.agenciapp.controller;
 
 import java.util.Collection;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.buildingways.iplycbackend.model.AccountActivity;
-import ar.com.buildingways.iplycbackend.service.AccountActivityService;
+import ar.com.buildingways.agenciapp.model.AccountActivity;
+import ar.com.buildingways.agenciapp.service.AccountActivityService;
 
 @RestController
 @RequestMapping("/")

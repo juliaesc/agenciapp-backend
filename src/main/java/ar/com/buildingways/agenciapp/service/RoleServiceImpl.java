@@ -1,10 +1,10 @@
-package ar.com.buildingways.iplycbackend.service;
+package ar.com.buildingways.agenciapp.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ar.com.buildingways.iplycbackend.model.Role;
+import ar.com.buildingways.agenciapp.model.Role;
 
 @Service("roleService")
 public class RoleServiceImpl implements RoleService{

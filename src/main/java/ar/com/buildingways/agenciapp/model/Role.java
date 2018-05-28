@@ -1,4 +1,4 @@
-package ar.com.buildingways.iplycbackend.model;
+package ar.com.buildingways.agenciapp.model;
 
 import java.util.HashSet;
 import java.util.Set;

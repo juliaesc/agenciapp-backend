@@ -1,8 +1,8 @@
-package ar.com.buildingways.iplycbackend.service
+package ar.com.buildingways.agenciapp.service
 
-import ar.com.buildingways.iplycbackend.model.AccountActivity
-import ar.com.buildingways.iplycbackend.model.User
-import ar.com.buildingways.iplycbackend.service.AccountActivityService
+import ar.com.buildingways.agenciapp.model.AccountActivity
+import ar.com.buildingways.agenciapp.model.User
+import ar.com.buildingways.agenciapp.service.AccountActivityService
 import org.joda.time.DateTime
 import java.sql.Date
 import spock.lang.Specification

@@ -1,4 +1,4 @@
-package ar.com.buildingways.iplycbackend.service;
+package ar.com.buildingways.agenciapp.service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -15,7 +15,7 @@ import javax.persistence.StoredProcedureQuery;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
-import ar.com.buildingways.iplycbackend.model.AccountActivity;
+import ar.com.buildingways.agenciapp.model.AccountActivity;
 
 @Service("accountActivityService")
 public class AccountActivityServiceImpl implements AccountActivityService {

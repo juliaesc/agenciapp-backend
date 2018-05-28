@@ -1,3 +1,4 @@
+package ar.com.buildingways.agenciapp.configuration;
 //package ar.com.buildingways.iplycbackend.configuration;
 //
 //import org.springframework.context.annotation.Bean;

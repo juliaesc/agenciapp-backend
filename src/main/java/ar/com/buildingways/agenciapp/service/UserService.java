@@ -1,8 +1,8 @@
-package ar.com.buildingways.iplycbackend.service;
+package ar.com.buildingways.agenciapp.service;
 
 import java.util.Collection;
 
-import ar.com.buildingways.iplycbackend.model.User;
+import ar.com.buildingways.agenciapp.model.User;
 
 public interface UserService {
 	

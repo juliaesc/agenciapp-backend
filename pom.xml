@@ -3,11 +3,11 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ar.com.buildingways</groupId>
-	<artifactId>iplyc-backend</artifactId>
+	<artifactId>agenciapp-backend</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	<name>iplyc-backend</name>
-	<description>IPLyC Backend</description>
+	<name>agenciapp-backend</name>
+	<description>AgenciApp Backend</description>
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>

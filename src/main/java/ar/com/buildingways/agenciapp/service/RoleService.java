@@ -1,7 +1,8 @@
-package ar.com.buildingways.iplycbackend.service;
+package ar.com.buildingways.agenciapp.service;
 
 import java.util.List;
-import ar.com.buildingways.iplycbackend.model.Role;
+
+import ar.com.buildingways.agenciapp.model.Role;
 
 public interface RoleService {
 	 
