@@ -16,12 +16,14 @@ import org.joda.time.DateTime;
 @Table(name = "USER_DETAILS")
 public class UserDetails {
 
-	private Long id;
+	private Long userId;
 	private User user;
 	private String address;
 	private String email;
 	private String corporateName;
-	private int cuit;
+	private Long cuit;
+	private int commissionAgent;
+	private int terminalQuantity;
 	private String createdBy;
 	private DateTime createdDate;
 	private String lastModifiedBy;
@@ -32,15 +34,15 @@ public class UserDetails {
     @Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
-	public Long getId() {
-		return id;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 	@OneToOne(cascade=CascadeType.ALL)  
-    @JoinColumn(name="id")  
+    @JoinColumn(name="user_id")  
     public User getUser() {
 		return user;
 	}
@@ -73,11 +75,27 @@ public class UserDetails {
 	}
 	
 	@Column(name = "cuit")
-	public int getCuit() {
+	public Long getCuit() {
 		return cuit;
 	}
-	public void setCuit(int cuit) {
+	public void setCuit(Long cuit) {
 		this.cuit = cuit;
+	}
+		
+	@Column(name = "commission_agent")
+	public int getCommissionAgent() {
+		return commissionAgent;
+	}
+	public void setCommissionAgent(int commissionAgent) {
+		this.commissionAgent = commissionAgent;
+	}
+	
+	@Column(name = "terminal_quantity")
+	public int getTerminalQuantity() {
+		return terminalQuantity;
+	}
+	public void setTerminalQuantity(int terminalQuantity) {
+		this.terminalQuantity = terminalQuantity;
 	}
 	
 	@Column(name = "created_by")

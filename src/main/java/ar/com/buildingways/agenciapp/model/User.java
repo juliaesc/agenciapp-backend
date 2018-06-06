@@ -22,6 +22,7 @@ public class User {
 	private String password;
 	private Role role;
 	private UserDetails userDetails;
+	private Account account;
 	private String createdBy;
 	private DateTime createdDate;
 	private String lastModifiedBy;
@@ -72,7 +73,15 @@ public class User {
         this.userDetails = userDetails;  
     }
     
-    @Column(name = "created_by")
+    @OneToOne(cascade=CascadeType.ALL, mappedBy="user")
+    public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	
+	@Column(name = "created_by")
 	public String getCreatedBy() {
 		return createdBy;
 	}

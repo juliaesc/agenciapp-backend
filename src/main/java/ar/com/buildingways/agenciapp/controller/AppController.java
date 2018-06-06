@@ -9,21 +9,36 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.com.buildingways.agenciapp.model.AccountActivity;
-import ar.com.buildingways.agenciapp.service.AccountActivityService;
+import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
+import ar.com.buildingways.agenciapp.service.AccountDailyRecordService;
+import ar.com.buildingways.agenciapp.service.UserService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/agenciapp")
 public class AppController {
 	
 	@Autowired
-	AccountActivityService accountActivityService;
+	AccountDailyRecordService accountDailyRecordService;
+	
+	@Autowired
+	UserService userService;
 
-	@GetMapping(value="/getAccountActivity/{username}/{currentDate}")
-	public Collection<AccountActivity> getAccountActivity(@PathVariable("username") int username, 
-														  @PathVariable("currentDate") String date) {
-		DateTime currentDate = new DateTime(2017, 11, 6, 0, 0, 0, 0);
-		return accountActivityService.getAccountActivity(username, currentDate);
+	@GetMapping(value="/getAccountDailyRecord/{username}/{currentDate}")
+	public Collection<AccountDailyRecord> getAccountDailyRecord(@PathVariable("username") int username, 
+														  		@PathVariable("currentDate") String date) {
+		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
+											Integer.parseInt(date.substring(4, 6)), 
+											Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
+		return accountDailyRecordService.getAccountDailyRecord(username, currentDate);
+	}
+	
+	@GetMapping(value="/getAccountDailyRecordByGame/{username}/{currentDate}")
+	public Collection<AccountDailyRecord> getAccountDailyRecordByGame(@PathVariable("username") int username, 
+														  			  @PathVariable("currentDate") String date) {
+		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
+				Integer.parseInt(date.substring(4, 6)), 
+				Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
+		return accountDailyRecordService.getAccountDailyRecordByGame(username, currentDate);
 	}
 
 }
