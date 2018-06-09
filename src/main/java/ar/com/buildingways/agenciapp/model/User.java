@@ -29,6 +29,7 @@ public class User {
 	private DateTime lastModifiedDate;
 	private boolean enabled;
 	private boolean deleted;
+	private boolean loginSuccess;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -127,6 +128,13 @@ public class User {
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	public boolean isLoginSuccess() {
+		return loginSuccess;
+	}
+	public void setLoginSuccess(boolean loginSuccess) {
+		this.loginSuccess = loginSuccess;
 	}
     
 }
