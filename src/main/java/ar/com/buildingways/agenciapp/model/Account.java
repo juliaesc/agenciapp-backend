@@ -30,8 +30,8 @@ public class Account {
 	private String holder;
 	private char directDebit;
 	private int accountType;
-	private int grossIncomePercentage;
-	private Long cbu;
+	private double grossIncomePercentage;
+	private String cbu;
 	private String createdBy;
 	private DateTime createdDate;
 	private String lastModifiedBy;
@@ -39,7 +39,31 @@ public class Account {
 	private boolean enabled;
 	private boolean deleted;
 	
-    @Id  
+	public Account() {
+		super();
+	}
+
+	public Account(Long userId, int accountNumber, int branchNumber, String holder, char directDebit, int accountType,
+			double grossIncomePercentage, String cbu, String createdBy, DateTime createdDate, String lastModifiedBy,
+			DateTime lastModifiedDate, boolean enabled, boolean deleted) {
+		super();
+		this.userId = userId;
+		this.accountNumber = accountNumber;
+		this.branchNumber = branchNumber;
+		this.holder = holder;
+		this.directDebit = directDebit;
+		this.accountType = accountType;
+		this.grossIncomePercentage = grossIncomePercentage;
+		this.cbu = cbu;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
+		this.enabled = enabled;
+		this.deleted = deleted;
+	}
+	
+	@Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
 	public Long getUserId() {
@@ -107,18 +131,18 @@ public class Account {
 	}
 	
 	@Column(name = "gross_income_percentage")
-	public int getGrossIncomePercentage() {
+	public double getGrossIncomePercentage() {
 		return grossIncomePercentage;
 	}
-	public void setGrossIncomePercentage(int grossIncomePercentage) {
+	public void setGrossIncomePercentage(double grossIncomePercentage) {
 		this.grossIncomePercentage = grossIncomePercentage;
 	}
 	
 	@Column(name = "cbu")
-	public Long getCbu() {
+	public String getCbu() {
 		return cbu;
 	}
-	public void setCbu(Long cbu) {
+	public void setCbu(String cbu) {
 		this.cbu = cbu;
 	}
 

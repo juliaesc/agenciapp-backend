@@ -6,6 +6,8 @@ import ar.com.buildingways.agenciapp.model.User;
 
 public interface UserService {
 	
+	public void loadUsers();
+	
 	public Collection<Integer> getLegajos();
 	
 	public User findUserByUsername(int username);

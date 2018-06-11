@@ -12,7 +12,7 @@ GO
 --CREATE VIEW [dbo].[e_v_Agenciero] 
 AS
 select n_legajo, t_apyn, t_calle, t_numero, t_localidad, c_codigopostal, c_comisionista, n_cantterminales,
-	   n_cuit, n_sucursal, n_cuenta, c_DebAut, c_tipocuenta, n_porcenIB, t_CBU_2 
+	   n_cuit, n_sucursal, n_cuenta, c_DebAut, c_tipocuenta, n_porcenIB, cast((t_CBU_1 + t_CBU_2) as varchar(22)) as n_cbu
 from CCorrientes.dbo.Agenciero
 GO
 
@@ -31,10 +31,10 @@ USE [AgenciApp_DB]
 GO
 --CREATE VIEW [dbo].[v_Users] 
 AS
-select cc.*, ce.t_email from [e_v_BConcesionario] ag
-inner join [e_v_Agenciero] cc
+select cc.*, ce.t_email from e_v_BConcesionario ag
+inner join e_v_Agenciero cc
 	on ag.n_legajo = cc.n_legajo
-inner join [e_v_TPadronEmail] ce
+inner join e_v_TPadronEmail ce
 	on ag.n_legajo = ce.n_legajo
 where ag.n_legajo in (700058, 723204)
 GO

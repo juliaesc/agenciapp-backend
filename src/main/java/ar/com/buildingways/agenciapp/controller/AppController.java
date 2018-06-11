@@ -56,5 +56,10 @@ public class AppController {
 		}
 		return new ResponseEntity<User>(res, HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/loadUsers")
+	public void loadUsers() {
+		userService.loadUsers();
+	}
 
 }
