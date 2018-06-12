@@ -1,6 +1,5 @@
 package ar.com.buildingways.agenciapp.service;
 
-import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import ar.com.buildingways.agenciapp.model.Account;
 import ar.com.buildingways.agenciapp.model.User;
 import ar.com.buildingways.agenciapp.model.UserDetails;
+import ar.com.buildingways.agenciapp.repository.RoleRepository;
 import ar.com.buildingways.agenciapp.repository.UserRepository;
 
 @Service("userService")
@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserRepository userRepository;
 	
-	private RoleService roleService;
+	@Autowired
+	private RoleRepository roleRepository;
 
 //	@Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,35 +44,57 @@ public class UserServiceImpl implements UserService{
 		Iterator<Object[]> it = queryResults.iterator();
 		while (it.hasNext()) {
 			Object[] item = (Object[])it.next();
-			User user = userRepository.findByUsername((int)item[0]);
-			if (user != null) {
+			User user = new User();
+			if (userRepository.findByUsername(((BigDecimal) item[0]).intValue()) != null) {
 				// Cuando se implemente el logueo por Active Directory, irá el nombre del usuario que ejecutó la importación del archivo de agencias.
 				user.setLastModifiedBy("escobjul");
 				user.setLastModifiedDate(new DateTime());
 			} else {
-				user = new User();
-				user.setUsername((Integer)item[0]);
+				user.setUsername(((BigDecimal) item[0]).intValue());
 				// Cuando se implemente el logueo por Active Directory, irá el nombre del usuario que ejecutó la importación del archivo de agencias.
 				user.setCreatedBy("escobjul");
 				user.setCreatedDate(new DateTime());
 				// user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-				user.setRole(roleService.findByRole("USER"));	
+				user.setRole(roleRepository.findByName("USER"));	
 			}	
-			user.setDeleted(false);
 			user.setEnabled(true);
-			UserDetails us = new UserDetails(user.getId(), 
-					(String) "Calle " + item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5], 
-					(String) item[15], (String) item[1], ((BigInteger) item[8]).longValue(), (Integer) item[6], (Short) item[7], 
-					user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(), user.isDeleted(), user.isEnabled());
-			us.setUser(user);
 			
-			Account a = new Account(user.getId(),
-					(Integer) item[10], (Integer) item[9], (String) item[1], (char) item[11], 
-					Integer.parseInt((String)item[12]), ((BigDecimal) item[13]).doubleValue(), (String) item[14], 
-					user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(), user.isDeleted(), user.isEnabled());
-			a.setUser(user);
-			user.setUserDetails(us);
+			UserDetails ud = new UserDetails();
+			ud.setAddress((String) "Calle " + item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5]);
+			ud.setEmail((String) item[16]);
+			ud.setStoreOwner((String) item[1]);
+			ud.setTradeName((String) item[15]);
+			ud.setCuit(((BigDecimal) item[8]).longValue());
+			ud.setCommissionAgent(((BigDecimal) item[6]).shortValue());
+			ud.setTerminalQuantity(((BigDecimal) item[7]).intValue());
+			ud.setCreatedBy(user.getCreatedBy());
+			ud.setCreatedDate(user.getCreatedDate());
+			ud.setLastModifiedBy(user.getLastModifiedBy());
+			ud.setLastModifiedDate(user.getLastModifiedDate());
+			ud.setDeleted(user.isDeleted());
+			ud.setEnabled(user.isEnabled());
+			
+			user.setUserDetails(ud);
+			ud.setUser(user);
+						
+			Account a = new Account();
+			a.setAccountNumber(((BigDecimal) item[10]).intValue());
+			a.setBranchNumber(((BigDecimal) item[9]).intValue());
+			a.setHolder((String) item[1]);
+			a.setDirectDebit((char) item[11]);
+			a.setAccountType((String)item[12]);
+			a.setGrossIncomePercentage(((BigDecimal) item[13]).doubleValue());
+			a.setCbu((String) item[14]);
+			a.setCreatedBy(user.getCreatedBy());
+			a.setCreatedDate(user.getCreatedDate());
+			a.setLastModifiedBy(user.getLastModifiedBy());
+			a.setLastModifiedDate(user.getLastModifiedDate());
+			a.setDeleted(user.isDeleted());
+			a.setEnabled(user.isEnabled());
+
 			user.setAccount(a);
+			a.setUser(user);
+			
 			userRepository.save(user);
 		}
 	}
@@ -90,14 +113,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User findUserByUsername(int username) {
 		return userRepository.findByUsername(username);
-	}
-
-	@Override
-	public void saveUser(User user) {
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        user.setActive(true);
-//        user.setRoles(user.getRoles());
-//		userRepository.save(user);
 	}
 
 	@Override

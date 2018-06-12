@@ -1,12 +1,12 @@
 package ar.com.buildingways.agenciapp.service;
 
-import java.util.List;
+import java.util.Collection;
+
 import ar.com.buildingways.agenciapp.model.Role;
 
 public interface RoleService {
-	 
-    Role findByRole(String name);
-     
-    List<Role> findAllRoles();
-
+	
+	public Role findByName(String name);
+	
+	public Collection<Role> findAllRoles();
 }

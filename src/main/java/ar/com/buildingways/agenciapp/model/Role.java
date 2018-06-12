@@ -16,22 +16,22 @@ import javax.persistence.Table;
 @Table(name = "ROLES")
 public class Role {
 	
-	private Long id;
+	private int id;
 	private String name;
 	private String description;
 	private Set<User> users = new HashSet<User>(0);
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
-	public Long getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", unique = true, nullable = false, columnDefinition = "numeric(8)")
+	public int getId() {
 		return id;
 	}	
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
-	@Column(name="name")
+	@Column(name="name", columnDefinition = "varchar(15)")
 	public String getName() {
 		return name;
 	}
@@ -39,7 +39,7 @@ public class Role {
 		this.name = name;
 	}
 	
-	@Column(name="description")
+	@Column(name="description", columnDefinition = "varchar(50)")
 	public String getDescription() {
 		return description;
 	}

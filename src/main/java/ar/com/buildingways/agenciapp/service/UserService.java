@@ -12,7 +12,5 @@ public interface UserService {
 	
 	public User findUserByUsername(int username);
 	
-	public void saveUser(User user);
-	
 	public Collection<User> findAllUsers();
 }

@@ -3,10 +3,11 @@ package ar.com.buildingways.agenciapp.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,11 +17,12 @@ import org.joda.time.DateTime;
 @Table(name = "USER_DETAILS")
 public class UserDetails {
 
-	private Long userId;
+	private int userId;
 	private User user;
 	private String address;
 	private String email;
-	private String corporateName;
+	private String storeOwner;
+	private String tradeName;
 	private Long cuit;
 	private int commissionAgent;
 	private int terminalQuantity;
@@ -31,18 +33,16 @@ public class UserDetails {
 	private boolean enabled;
 	private boolean deleted;
 
-    public UserDetails() {
-		super();
-	}
+    public UserDetails() {}
 
-	public UserDetails(Long userId, String address, String email, String corporateName, Long cuit, int commissionAgent,
+	public UserDetails(User user, String address, String email, String storeOwner, String tradeName, Long cuit, int commissionAgent,
 			int terminalQuantity, String createdBy, DateTime createdDate, String lastModifiedBy,
 			DateTime lastModifiedDate, boolean enabled, boolean deleted) {
-		super();
-		this.userId = userId;
+		this.user = user;
 		this.address = address;
 		this.email = email;
-		this.corporateName = corporateName;
+		this.storeOwner = storeOwner;
+		this.tradeName = tradeName;
 		this.cuit = cuit;
 		this.commissionAgent = commissionAgent;
 		this.terminalQuantity = terminalQuantity;
@@ -57,15 +57,16 @@ public class UserDetails {
 	@Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
-	public Long getUserId() {
-		return userId;
+	@Column (name = "user_id", unique = true, nullable = false, columnDefinition = "numeric(8)")
+	public int getUserId() {
+		return this.userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL)  
-    @JoinColumn(name="user_id")  
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  
+    @PrimaryKeyJoinColumn  
     public User getUser() {
 		return user;
 	}
@@ -73,7 +74,7 @@ public class UserDetails {
 		this.user = user;
 	}
 	
-	@Column(name = "address")
+	@Column(name = "address", columnDefinition = "varchar(120)")
 	public String getAddress() {
 		return address;
 	}
@@ -81,7 +82,7 @@ public class UserDetails {
 		this.address = address;
 	}
 	
-	@Column(name = "email")
+	@Column(name = "email", columnDefinition = "varchar(30)")
 	public String getEmail() {
 		return email;
 	}
@@ -89,15 +90,23 @@ public class UserDetails {
 		this.email = email;
 	}
 	
-	@Column(name = "corporate_name")
-	public String getCorporateName() {
-		return corporateName;
+	@Column(name = "store_owner", columnDefinition = "varchar(50)")
+	public String getStoreOwner() {
+		return storeOwner;
 	}
-	public void setCorporateName(String corporateName) {
-		this.corporateName = corporateName;
+	public void setStoreOwner(String storeOwner) {
+		this.storeOwner = storeOwner;
 	}
 	
-	@Column(name = "cuit")
+	@Column(name = "trade_name", nullable = true, columnDefinition = "varchar(80)")
+	public String getTradeName() {
+		return tradeName;
+	}
+	public void setTradeName(String tradeName) {
+		this.tradeName = tradeName;
+	}
+	
+	@Column(name = "cuit", columnDefinition = "numeric(15)")
 	public Long getCuit() {
 		return cuit;
 	}
@@ -105,7 +114,7 @@ public class UserDetails {
 		this.cuit = cuit;
 	}
 		
-	@Column(name = "commission_agent")
+	@Column(name = "commission_agent", columnDefinition = "numeric(3)")
 	public int getCommissionAgent() {
 		return commissionAgent;
 	}
@@ -113,7 +122,7 @@ public class UserDetails {
 		this.commissionAgent = commissionAgent;
 	}
 	
-	@Column(name = "terminal_quantity")
+	@Column(name = "terminal_quantity", columnDefinition = "numeric(3)")
 	public int getTerminalQuantity() {
 		return terminalQuantity;
 	}
@@ -121,7 +130,7 @@ public class UserDetails {
 		this.terminalQuantity = terminalQuantity;
 	}
 	
-	@Column(name = "created_by")
+	@Column(name = "created_by", columnDefinition = "varchar(20)")
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -129,7 +138,7 @@ public class UserDetails {
 		this.createdBy = createdBy;
 	}
 	
-	@Column(name = "created_date")
+	@Column(name = "created_date", columnDefinition = "datetime")
 	public DateTime getCreatedDate() {
 		return createdDate;
 	}
@@ -137,7 +146,7 @@ public class UserDetails {
 		this.createdDate = createdDate;
 	}
 	
-	@Column(name = "last_modified_by")
+	@Column(name = "last_modified_by", nullable = true, columnDefinition = "varchar(20)")
 	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
@@ -145,7 +154,7 @@ public class UserDetails {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 	
-	@Column(name = "last_modified_date")
+	@Column(name = "last_modified_date", nullable = true, columnDefinition = "datetime")
 	public DateTime getLastModifiedDate() {
 		return lastModifiedDate;
 	}
@@ -153,7 +162,7 @@ public class UserDetails {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 	
-	@Column(name = "enabled")
+	@Column(name = "enabled", columnDefinition = "tinyint")
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -161,7 +170,7 @@ public class UserDetails {
 		this.enabled = enabled;
 	}
 	
-	@Column(name = "deleted")
+	@Column(name = "deleted", nullable = true, columnDefinition = "tinyint")
 	public boolean isDeleted() {
 		return deleted;
 	}

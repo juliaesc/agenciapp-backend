@@ -3,9 +3,11 @@ package ar.com.buildingways.agenciapp.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,9 +28,11 @@ public class AccountDailyRecord {
 	private String game;
 	private int drawNumber;
 	
-	public AccountDailyRecord(String currency, double debt, double credit, 
+	public AccountDailyRecord() {}
+	
+	public AccountDailyRecord(Account account, String currency, double debt, double credit, 
 			double interest, DateTime dueDate, String state) {
-		super();
+		this.account = account;
 		this.currency = currency;
 		this.debt = debt;
 		this.credit = credit;
@@ -37,9 +41,9 @@ public class AccountDailyRecord {
 		this.state = state;
 	}
 	
-	public AccountDailyRecord(String currency, double debt, String game, int drawNumber,
+	public AccountDailyRecord(Account account, String currency, double debt, String game, int drawNumber,
 			double interest, DateTime dueDate, String state) {
-		super();
+		this.account = account;
 		this.currency = currency;
 		this.debt = debt;
 		this.game = game;
@@ -50,8 +54,8 @@ public class AccountDailyRecord {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false, columnDefinition = "numeric(10)")
 	public Long getId() {
 		return id;
 	}
@@ -59,7 +63,8 @@ public class AccountDailyRecord {
 		this.id = id;
 	}
 	
-	@ManyToOne(cascade=CascadeType.ALL)  
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
+	@JoinColumn(name = "account_id", nullable = false, columnDefinition = "numeric(8)")
 	public Account getAccount() {
 		return account;
 	}
@@ -67,7 +72,7 @@ public class AccountDailyRecord {
 		this.account = account;
 	}
 	
-	@Column(name = "currency")
+	@Column(name = "currency", columnDefinition = "varchar(10)")
 	public String getCurrency() {
 		return currency;
 	}
@@ -75,7 +80,7 @@ public class AccountDailyRecord {
 		this.currency = currency;
 	}
 	
-	@Column(name = "debt")
+	@Column(name = "debt", nullable = true, columnDefinition = "decimal(6,2)")
 	public double getDebt() {
 		return debt;
 	}
@@ -83,7 +88,7 @@ public class AccountDailyRecord {
 		this.debt = debt;
 	}
 	
-	@Column(name = "credit")
+	@Column(name = "credit", nullable = true, columnDefinition = "decimal(6,2)")
 	public double getCredit() {
 		return credit;
 	}
@@ -91,7 +96,7 @@ public class AccountDailyRecord {
 		this.credit = credit;
 	}
 	
-	@Column(name = "interest")
+	@Column(name = "interest", nullable = true, columnDefinition = "decimal(6,2)")
 	public double getInterest() {
 		return interest;
 	}
@@ -99,7 +104,7 @@ public class AccountDailyRecord {
 		this.interest = interest;
 	}
 	
-	@Column(name = "due_date")
+	@Column(name = "due_date", nullable = true, columnDefinition = "datetime")
 	public DateTime getDueDate() {
 		return dueDate;
 	}
@@ -107,7 +112,7 @@ public class AccountDailyRecord {
 		this.dueDate = dueDate;
 	}
 	
-	@Column(name = "state")
+	@Column(name = "state", columnDefinition = "varchar(15)")
 	public String getState() {
 		return state;
 	}
@@ -115,7 +120,7 @@ public class AccountDailyRecord {
 		this.state = state;
 	}
 	
-	@Column(name = "game")
+	@Column(name = "game", columnDefinition = "varchar(10)")
 	public String getGame() {
 		return game;
 	}
@@ -123,7 +128,7 @@ public class AccountDailyRecord {
 		this.game = game;
 	}
 	
-	@Column(name = "draw_number")
+	@Column(name = "draw_number", columnDefinition = "numeric(6)")
 	public int getDrawNumber() {
 		return drawNumber;
 	}

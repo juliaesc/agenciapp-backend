@@ -45,8 +45,13 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 			BigDecimal debt = (BigDecimal) item[3];
 			BigDecimal credit = (BigDecimal)item[4];
 			BigDecimal interest = (BigDecimal)item[5];
-			AccountDailyRecord ac = new AccountDailyRecord(currency, debt.doubleValue(), credit.doubleValue(),
-					interest.doubleValue(), new DateTime(dueDate.getTime()), state);
+			AccountDailyRecord ac = new AccountDailyRecord();
+			ac.setCurrency(currency);
+			ac.setDebt(debt.doubleValue());
+			ac.setCredit(credit.doubleValue());
+			ac.setInterest(interest.doubleValue());
+			ac.setDueDate(new DateTime(dueDate.getTime()));
+			ac.setState(state);
 			accountDailyRecords.add(ac);
 		}
 		return accountDailyRecords;
@@ -78,8 +83,14 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 			if (interest==null) {
 				interest = BigDecimal.ZERO;
 			}
-			AccountDailyRecord ac = new AccountDailyRecord(currency, debt.doubleValue(), game, drawNumber,
-					interest.doubleValue(), new DateTime(dueDate.getTime()), state);
+			AccountDailyRecord ac = new AccountDailyRecord();
+			ac.setCurrency(currency);
+			ac.setDebt(debt.doubleValue());
+			ac.setInterest(interest.doubleValue());
+			ac.setDueDate(new DateTime(dueDate.getTime()));
+			ac.setState(state);
+			ac.setGame(game);
+			ac.setDrawNumber(drawNumber);
 			accountDailyRecords.add(ac);
 		}
 		return accountDailyRecords;
