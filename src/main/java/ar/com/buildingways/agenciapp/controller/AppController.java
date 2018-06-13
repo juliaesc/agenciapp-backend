@@ -52,7 +52,7 @@ public class AppController {
 		if(user!=null) {
 			res = new User();
 			res.setUsername(user.getUsername());
-			res.setLoginSuccess(user.getUsername() == 723204 && user.getPassword().equals("antonelli"));
+			res.setEnabled(user.getUsername() == 723204 && user.getPassword().equals("antonelli"));
 		}
 		return new ResponseEntity<User>(res, HttpStatus.OK);
 	}

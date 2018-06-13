@@ -20,6 +20,8 @@ import ar.com.buildingways.agenciapp.model.User;
 import ar.com.buildingways.agenciapp.model.UserDetails;
 import ar.com.buildingways.agenciapp.repository.RoleRepository;
 import ar.com.buildingways.agenciapp.repository.UserRepository;
+import ar.com.buildingways.agenciapp.utils.Constants;
+import ar.com.buildingways.agenciapp.utils.SQLQueries;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
@@ -38,29 +40,31 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void loadUsers() {
-		Query query = entityManager.createNativeQuery("SELECT * FROM v_Users");
+		Query query = entityManager.createNativeQuery(SQLQueries.LOAD_USERS);
 		@SuppressWarnings("unchecked")
 		Collection<Object[]> queryResults = query.getResultList();
 		Iterator<Object[]> it = queryResults.iterator();
 		while (it.hasNext()) {
 			Object[] item = (Object[])it.next();
-			User user = new User();
-			if (userRepository.findByUsername(((BigDecimal) item[0]).intValue()) != null) {
+			User user = userRepository.findByUsername(((BigDecimal) item[0]).intValue());
+			if (user != null) {
 				// Cuando se implemente el logueo por Active Directory, irá el nombre del usuario que ejecutó la importación del archivo de agencias.
 				user.setLastModifiedBy("escobjul");
 				user.setLastModifiedDate(new DateTime());
 			} else {
+				user = new User();
 				user.setUsername(((BigDecimal) item[0]).intValue());
 				// Cuando se implemente el logueo por Active Directory, irá el nombre del usuario que ejecutó la importación del archivo de agencias.
 				user.setCreatedBy("escobjul");
 				user.setCreatedDate(new DateTime());
-				// user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-				user.setRole(roleRepository.findByName("USER"));	
+				// Definir con qué credenciales se va a loguear.
+				// user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));		
 			}	
+			user.setRole(roleRepository.findByName(Constants.ROL_USUARIO));
 			user.setEnabled(true);
 			
 			UserDetails ud = new UserDetails();
-			ud.setAddress((String) "Calle " + item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5]);
+			ud.setAddress((String) item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5]);
 			ud.setEmail((String) item[16]);
 			ud.setStoreOwner((String) item[1]);
 			ud.setTradeName((String) item[15]);
@@ -76,6 +80,7 @@ public class UserServiceImpl implements UserService{
 			
 			user.setUserDetails(ud);
 			ud.setUser(user);
+			ud.setUserId(user.getId());
 						
 			Account a = new Account();
 			a.setAccountNumber(((BigDecimal) item[10]).intValue());
@@ -94,6 +99,7 @@ public class UserServiceImpl implements UserService{
 
 			user.setAccount(a);
 			a.setUser(user);
+			a.setUserId(user.getId());
 			
 			userRepository.save(user);
 		}

@@ -34,7 +34,6 @@ public class User {
 	private DateTime lastModifiedDate;
 	private boolean enabled;
 	private boolean deleted;
-	private boolean loginSuccess;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -135,13 +134,5 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	
-	@Column(name = "login", nullable = true, columnDefinition = "char(1)")
-	public boolean isLoginSuccess() {
-		return loginSuccess;
-	}
-	public void setLoginSuccess(boolean loginSuccess) {
-		this.loginSuccess = loginSuccess;
-	}
-    
+   
 }

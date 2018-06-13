@@ -40,7 +40,7 @@ inner join PadronMensajeria.dbo.TPadronEmail tpe
 on tp.c_padron = tpe.c_padron 
 GO
 
---Sólo para dos usuarios por ahora, para pruebas
+--Sólo para tres usuarios por ahora, para pruebas
 USE [AgenciApp_DB]
 GO
 --ALTER VIEW [dbo].[v_Users] 
@@ -50,5 +50,5 @@ inner join e_v_Agenciero cc
 	on ag.legajo = cc.legajo
 inner join e_v_TPadronEmail ce
 	on ag.legajo = ce.legajo
-where ag.legajo in (700058, 723204)
+where ag.legajo in (700058, 723204, 701233)
 GO
