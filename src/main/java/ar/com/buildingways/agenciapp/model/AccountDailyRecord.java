@@ -27,22 +27,23 @@ public class AccountDailyRecord {
 	private String state;
 	private String game;
 	private int drawNumber;
+	private String type;
 	
 	public AccountDailyRecord() {}
 	
-	public AccountDailyRecord(Account account, String currency, double debt, double credit, 
-			double interest, DateTime dueDate, String state) {
+	public AccountDailyRecord(Account account, String currency, double debt, 
+			double interest, DateTime dueDate, String state, String type) {
 		this.account = account;
 		this.currency = currency;
 		this.debt = debt;
-		this.credit = credit;
 		this.interest = interest;
 		this.dueDate = dueDate;
 		this.state = state;
+		this.type = type;
 	}
 	
 	public AccountDailyRecord(Account account, String currency, double debt, String game, int drawNumber,
-			double interest, DateTime dueDate, String state) {
+			double interest, DateTime dueDate, String state, String type) {
 		this.account = account;
 		this.currency = currency;
 		this.debt = debt;
@@ -51,6 +52,7 @@ public class AccountDailyRecord {
 		this.interest = interest;
 		this.dueDate = dueDate;
 		this.state = state;
+		this.type = type;
 	}
 	
 	@Id
@@ -134,6 +136,14 @@ public class AccountDailyRecord {
 	}
 	public void setDrawNumber(int drawNumber) {
 		this.drawNumber = drawNumber;
+	}
+	
+	@Column(name = "type", columnDefinition = "varchar(30)")
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

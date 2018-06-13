@@ -57,6 +57,14 @@ public class AppController {
 		return new ResponseEntity<User>(res, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/loadAccountDailyRecords/{currentDate}")
+	public Collection<AccountDailyRecord> loadAccountDailyRecords(@PathVariable("currentDate") String date) {
+		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
+				Integer.parseInt(date.substring(4, 6)), 
+				Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
+		return accountDailyRecordService.loadAccountDailyRecords(currentDate);
+	}
+	
 	@GetMapping(value="/loadUsers")
 	public void loadUsers() {
 		userService.loadUsers();

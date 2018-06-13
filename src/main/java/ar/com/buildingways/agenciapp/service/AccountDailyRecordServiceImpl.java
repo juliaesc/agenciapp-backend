@@ -13,9 +13,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
+import ar.com.buildingways.agenciapp.model.User;
+import ar.com.buildingways.agenciapp.repository.UserRepository;
+import ar.com.buildingways.agenciapp.utils.SQLQueries;
 
 @Service("accountActivityService")
 public class AccountDailyRecordServiceImpl implements AccountDailyRecordService {
@@ -23,76 +27,46 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	@Override
-	public Collection<AccountDailyRecord> getAccountDailyRecord(int username, DateTime currentDate) {
+	public Collection<AccountDailyRecord> loadAccountDailyRecords(DateTime currentDate) {
 		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
-		StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("CC_ConsultarEstadoCuentaCorrientePorLegajo");
-		String firstParam = "legajo";
-		String secondParam = "fecha_actual";
-		storedProcedure.registerStoredProcedureParameter(firstParam, Integer.class, ParameterMode.IN);
-		storedProcedure.registerStoredProcedureParameter(secondParam, Date.class, ParameterMode.IN);
-		storedProcedure.setParameter(firstParam, username);
+		StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery(SQLQueries.LOAD_ACCOUNT_DAILY_RECORDS);
+		String param = "fecha_actual";
+		storedProcedure.registerStoredProcedureParameter(param, Date.class, ParameterMode.IN);
 		Date currentSQLDate = new Date(currentDate.toDateTime().getMillis());
-		storedProcedure.setParameter(secondParam, currentSQLDate);
+		storedProcedure.setParameter(param, currentSQLDate);
 		@SuppressWarnings("unchecked")
 		Collection<Object[]> storedProcedureResults = storedProcedure.getResultList();
 		Iterator<Object[]> it = storedProcedureResults.iterator();
 		while (it.hasNext()) {
 			Object[] item = (Object[])it.next();
-			Timestamp dueDate = (Timestamp) item[0];
-			String state = (String) item[1];
-			String currency = (String) item[2];
-			BigDecimal debt = (BigDecimal) item[3];
-			BigDecimal credit = (BigDecimal)item[4];
-			BigDecimal interest = (BigDecimal)item[5];
 			AccountDailyRecord ac = new AccountDailyRecord();
-			ac.setCurrency(currency);
-			ac.setDebt(debt.doubleValue());
-			ac.setCredit(credit.doubleValue());
-			ac.setInterest(interest.doubleValue());
-			ac.setDueDate(new DateTime(dueDate.getTime()));
-			ac.setState(state);
+			ac.setGame((String) item[1]);
+			ac.setDrawNumber((Integer) item[2]);
+			ac.setDueDate(new DateTime((Timestamp) item[3]));
+			ac.setDebt(((BigDecimal) item[4]).doubleValue());
+			ac.setCredit(((BigDecimal) item[5]).doubleValue());
+			ac.setInterest(((BigDecimal) item[6]).doubleValue());
+			ac.setState((String) item[7]);
+			ac.setCurrency((String) item[8]);
+			ac.setType((String) item[9]);
 			accountDailyRecords.add(ac);
 		}
 		return accountDailyRecords;
 	}
 	
 	@Override
+	public Collection<AccountDailyRecord> getAccountDailyRecord(int username, DateTime currentDate) {
+		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
+		return accountDailyRecords;
+	}
+	
+	@Override
 	public Collection<AccountDailyRecord> getAccountDailyRecordByGame(int username, DateTime currentDate) {
 		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
-		StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("CC_ConsultarEstadoCuentaCorrientePorLegajoPorJuego");
-		String firstParam = "legajo";
-		String secondParam = "fecha_actual";
-		storedProcedure.registerStoredProcedureParameter(firstParam, Integer.class, ParameterMode.IN);
-		storedProcedure.registerStoredProcedureParameter(secondParam, Date.class, ParameterMode.IN);
-		storedProcedure.setParameter(firstParam, username);
-		Date currentSQLDate = new Date(currentDate.toDateTime().getMillis());
-		storedProcedure.setParameter(secondParam, currentSQLDate);
-		@SuppressWarnings("unchecked")
-		Collection<Object[]> storedProcedureResults = storedProcedure.getResultList();
-		Iterator<Object[]> it = storedProcedureResults.iterator();
-		while (it.hasNext()) {
-			Object[] item = (Object[])it.next();
-			String game = (String) item[1];
-			int drawNumber = (int) item[2];
-			String currency = (String) item[3];
-			String state = (String) item[4];
-			Timestamp dueDate = (Timestamp) item[5];
-			BigDecimal debt = (BigDecimal) item[6];
-			BigDecimal interest = (BigDecimal)item[7];
-			if (interest==null) {
-				interest = BigDecimal.ZERO;
-			}
-			AccountDailyRecord ac = new AccountDailyRecord();
-			ac.setCurrency(currency);
-			ac.setDebt(debt.doubleValue());
-			ac.setInterest(interest.doubleValue());
-			ac.setDueDate(new DateTime(dueDate.getTime()));
-			ac.setState(state);
-			ac.setGame(game);
-			ac.setDrawNumber(drawNumber);
-			accountDailyRecords.add(ac);
-		}
 		return accountDailyRecords;
 	}
 
