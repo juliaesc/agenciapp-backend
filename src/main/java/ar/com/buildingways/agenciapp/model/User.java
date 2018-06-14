@@ -134,5 +134,9 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+<<<<<<< Updated upstream
    
+=======
+    
+>>>>>>> Stashed changes
 }
