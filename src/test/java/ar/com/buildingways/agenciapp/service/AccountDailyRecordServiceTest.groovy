@@ -6,20 +6,18 @@ import spock.lang.Specification
 
 class AccountDailyRecordServiceTest extends Specification {
 	
-//	def "Dado el legajo 723204 y la fecha 6/11/2017, ejecuto un método y me devuelve el estado de su cuenta"() {
+//	def "Dada una fecha, ejecuto un método y me devuelve los movimientos de cuenta para esa fecha."() {
 //		
-//		AccountDailyRecordService accountDailyRecordService = Mock();
+//		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>()
 //		
 //		given:
-//			Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>()
-//			int username = 723204
-//			DateTime currentDate = new DateTime(2017, 11, 6, 0, 0, 0, 0)
+//			DateTime currentDate = new DateTime(0, 0, 0, 0, 0, 0, 0)	
 //				
 //		when:
-//			accountDailyRecords.addAll(accountDailyRecordService.getAccountDailyRecord(username, currentDate))
+//			accountDailyRecords.addAll(accountDailyRecordService.loadAccountDailyRecords(currentDate))
 //		
 //		then:
-//			 accountDailyRecords.size() == 113
+//			return accountDailyRecords
 //	
 //	}
 }
