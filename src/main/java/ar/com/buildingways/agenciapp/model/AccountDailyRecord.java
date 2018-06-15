@@ -3,7 +3,6 @@ package ar.com.buildingways.agenciapp.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,7 +64,7 @@ public class AccountDailyRecord {
 		this.id = id;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
+	@ManyToOne(cascade = CascadeType.ALL) 
 	@JoinColumn(name = "account_id", nullable = false, columnDefinition = "numeric(8)")
 	public Account getAccount() {
 		return account;

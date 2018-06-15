@@ -3,7 +3,6 @@ package ar.com.buildingways.agenciapp.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,7 +61,7 @@ public class User {
 		this.password = password;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "role_id", nullable = false, columnDefinition = "numeric(8)")
 	public Role getRole() {
 		return role;
@@ -71,7 +70,7 @@ public class User {
 		this.role = role;
 	}
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="user")
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="user")
     public UserDetails getUserDetails(){  
         return userDetails;  
     }  
@@ -79,7 +78,7 @@ public class User {
         this.userDetails = userDetails;  
     }
     
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="user")
+    @OneToOne(cascade=CascadeType.ALL, mappedBy="user")
     public Account getAccount() {
 		return account;
 	}
@@ -134,9 +133,4 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-<<<<<<< Updated upstream
-   
-=======
-    
->>>>>>> Stashed changes
 }

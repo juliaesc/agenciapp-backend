@@ -17,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
-import ar.com.buildingways.agenciapp.model.User;
-import ar.com.buildingways.agenciapp.repository.UserRepository;
+import ar.com.buildingways.agenciapp.repository.AccountRepository;
 import ar.com.buildingways.agenciapp.utils.SQLQueries;
 
 @Service("accountActivityService")
@@ -28,7 +27,7 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 	private EntityManager entityManager;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AccountRepository accountRepository;
 	
 	@Override
 	public Collection<AccountDailyRecord> loadAccountDailyRecords(DateTime currentDate) {
@@ -44,15 +43,16 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 		while (it.hasNext()) {
 			Object[] item = (Object[])it.next();
 			AccountDailyRecord ac = new AccountDailyRecord();
-			ac.setGame((String) item[1]);
-			ac.setDrawNumber((Integer) item[2]);
-			ac.setDueDate(new DateTime((Timestamp) item[3]));
-			ac.setDebt(((BigDecimal) item[4]).doubleValue());
-			ac.setCredit(((BigDecimal) item[5]).doubleValue());
-			ac.setInterest(((BigDecimal) item[6]).doubleValue());
-			ac.setState((String) item[7]);
-			ac.setCurrency((String) item[8]);
-			ac.setType((String) item[9]);
+			ac.setAccount(accountRepository.findByAccountNumber((Integer) item[1]));
+			ac.setGame((String) item[2]);
+			ac.setDrawNumber((Integer) item[3]);
+			ac.setDueDate(new DateTime((Timestamp) item[4]));
+			ac.setDebt(((BigDecimal) item[5]).doubleValue());
+			ac.setCredit(((BigDecimal) item[6]).doubleValue());
+			ac.setInterest(((BigDecimal) item[7]).doubleValue());
+			ac.setState((String) item[8]);
+			ac.setCurrency((String) item[9]);
+			ac.setType((String) item[10]);
 			accountDailyRecords.add(ac);
 		}
 		return accountDailyRecords;
