@@ -10,8 +10,8 @@ public interface AccountDailyRecordService {
 	
 	public Collection<AccountDailyRecord> loadAccountDailyRecords(DateTime currentDate);
 	
-	public Collection<AccountDailyRecord> getAccountDailyRecord(int username, DateTime currentDate);
+	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord(int username, DateTime currentDate);
 	
-	public Collection<AccountDailyRecord> getAccountDailyRecordByGame(int username, DateTime currentDate);
+	public Collection<AccountDailyRecord> getItemizedAccountDailyRecord(int username, DateTime currentDate);
 
 }

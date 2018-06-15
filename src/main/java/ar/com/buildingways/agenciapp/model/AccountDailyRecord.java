@@ -12,11 +12,18 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "ACCOUNT_DAILY_RECORDS")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+  				  property = "id")
 public class AccountDailyRecord {
  
 	private Long id;
+	@JsonManagedReference
 	private Account account;
 	private String currency;
 	private double debt;
@@ -27,32 +34,6 @@ public class AccountDailyRecord {
 	private String game;
 	private int drawNumber;
 	private String type;
-	
-	public AccountDailyRecord() {}
-	
-	public AccountDailyRecord(Account account, String currency, double debt, 
-			double interest, DateTime dueDate, String state, String type) {
-		this.account = account;
-		this.currency = currency;
-		this.debt = debt;
-		this.interest = interest;
-		this.dueDate = dueDate;
-		this.state = state;
-		this.type = type;
-	}
-	
-	public AccountDailyRecord(Account account, String currency, double debt, String game, int drawNumber,
-			double interest, DateTime dueDate, String state, String type) {
-		this.account = account;
-		this.currency = currency;
-		this.debt = debt;
-		this.game = game;
-		this.drawNumber = drawNumber;
-		this.interest = interest;
-		this.dueDate = dueDate;
-		this.state = state;
-		this.type = type;
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,7 +62,7 @@ public class AccountDailyRecord {
 		this.currency = currency;
 	}
 	
-	@Column(name = "debt", nullable = true, columnDefinition = "decimal(6,2)")
+	@Column(name = "debt", nullable = true, columnDefinition = "decimal(8,2)")
 	public double getDebt() {
 		return debt;
 	}
@@ -89,7 +70,7 @@ public class AccountDailyRecord {
 		this.debt = debt;
 	}
 	
-	@Column(name = "credit", nullable = true, columnDefinition = "decimal(6,2)")
+	@Column(name = "credit", nullable = true, columnDefinition = "decimal(8,2)")
 	public double getCredit() {
 		return credit;
 	}
@@ -97,7 +78,7 @@ public class AccountDailyRecord {
 		this.credit = credit;
 	}
 	
-	@Column(name = "interest", nullable = true, columnDefinition = "decimal(6,2)")
+	@Column(name = "interest", nullable = true, columnDefinition = "decimal(8,2)")
 	public double getInterest() {
 		return interest;
 	}
@@ -113,7 +94,7 @@ public class AccountDailyRecord {
 		this.dueDate = dueDate;
 	}
 	
-	@Column(name = "state", columnDefinition = "varchar(15)")
+	@Column(name = "state", columnDefinition = "varchar(30)")
 	public String getState() {
 		return state;
 	}
@@ -121,7 +102,7 @@ public class AccountDailyRecord {
 		this.state = state;
 	}
 	
-	@Column(name = "game", columnDefinition = "varchar(10)")
+	@Column(name = "game", columnDefinition = "varchar(20)")
 	public String getGame() {
 		return game;
 	}

@@ -33,28 +33,7 @@ public class UserDetails {
 	private boolean enabled;
 	private boolean deleted;
 
-    public UserDetails() {}
-
-	public UserDetails(User user, String address, String email, String storeOwner, String tradeName, Long cuit, int commissionAgent,
-			int terminalQuantity, String createdBy, DateTime createdDate, String lastModifiedBy,
-			DateTime lastModifiedDate, boolean enabled, boolean deleted) {
-		this.user = user;
-		this.address = address;
-		this.email = email;
-		this.storeOwner = storeOwner;
-		this.tradeName = tradeName;
-		this.cuit = cuit;
-		this.commissionAgent = commissionAgent;
-		this.terminalQuantity = terminalQuantity;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
-		this.enabled = enabled;
-		this.deleted = deleted;
-	}
-    
-	@Id  
+ 	@Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
 	@Column (name = "user_id", unique = true, nullable = false, columnDefinition = "numeric(8)")

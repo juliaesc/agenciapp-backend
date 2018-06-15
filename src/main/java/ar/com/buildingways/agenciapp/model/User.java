@@ -15,15 +15,22 @@ import javax.persistence.UniqueConstraint;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "USERS",
 	   uniqueConstraints = { @UniqueConstraint(columnNames = "id"),
 			   				 @UniqueConstraint(columnNames = "username")})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  		  property = "id")
 public class User {
 	
 	private int id;
 	private int username;
 	private String password;
+	@JsonManagedReference
 	private Role role;
 	private UserDetails userDetails;
 	private Account account;

@@ -27,25 +27,10 @@ public class AppController {
 	
 	@Autowired
 	UserService userService;
-
-	@GetMapping(value="/getAccountDailyRecord/{username}/{currentDate}")
-	public Collection<AccountDailyRecord> getAccountDailyRecord(@PathVariable("username") int username, 
-														  		@PathVariable("currentDate") String date) {
-		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
-											Integer.parseInt(date.substring(4, 6)), 
-											Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
-		return accountDailyRecordService.getAccountDailyRecord(username, currentDate);
-	}
 	
-	@GetMapping(value="/getAccountDailyRecordByGame/{username}/{currentDate}")
-	public Collection<AccountDailyRecord> getAccountDailyRecordByGame(@PathVariable("username") int username, 
-														  			  @PathVariable("currentDate") String date) {
-		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
-				Integer.parseInt(date.substring(4, 6)), 
-				Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
-		return accountDailyRecordService.getAccountDailyRecordByGame(username, currentDate);
-	}
-	
+	/** Login de la aplicación.
+	 *
+	 */
 	@PostMapping(value="/login", produces="application/json")
 	public ResponseEntity<User> login(@RequestBody User user) {
 		User res = null;
@@ -57,6 +42,17 @@ public class AppController {
 		return new ResponseEntity<User>(res, HttpStatus.OK);
 	}
 	
+	/** Recupera diariamente los datos de los usuarios habilitados para usar la aplicación.
+	 *	Actualiza la tabla Users, UserDetails y Accounts.
+	 */
+	@GetMapping(value="/loadUsers")
+	public void loadUsers() {
+		userService.loadUsers();
+	}
+	
+	/** Recupera diariamente los movimientos de cuenta de los usuarios habilitados para usar la aplicación.
+	 *	Actualiza la AccountDailyRecords.
+	 */
 	@GetMapping(value="/loadAccountDailyRecords/{currentDate}")
 	public Collection<AccountDailyRecord> loadAccountDailyRecords(@PathVariable("currentDate") String date) {
 		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
@@ -64,10 +60,29 @@ public class AppController {
 				Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
 		return accountDailyRecordService.loadAccountDailyRecords(currentDate);
 	}
+
+	/** Consulta el resultado de los movimientos de cuenta para un agenciero en el día de la fecha.
+	 *	Consulta la tabla AccountDailyRecords.
+	 */
+	@GetMapping(value="/getGlobalAccountDailyRecord/{username}/{currentDate}")
+	public Collection<AccountDailyRecord> getAccountDailyRecord(@PathVariable("username") int username, 
+														  		@PathVariable("currentDate") String date) {
+		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
+											Integer.parseInt(date.substring(4, 6)), 
+											Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
+		return accountDailyRecordService.getGlobalAccountDailyRecord(username, currentDate);
+	}
 	
-	@GetMapping(value="/loadUsers")
-	public void loadUsers() {
-		userService.loadUsers();
+	/** Consulta el desglose de movimientos de cuenta por juego y evento para un agenciero en el día de la fecha.
+	 *	Consulta la tabla AccountDailyRecords.
+	 */
+	@GetMapping(value="/getItemizedAccountDailyRecord/{username}/{currentDate}")
+	public Collection<AccountDailyRecord> getAccountDailyRecordByGame(@PathVariable("username") int username, 
+														  			  @PathVariable("currentDate") String date) {
+		DateTime currentDate = new DateTime(Integer.parseInt(date.substring(0, 4)), 
+				Integer.parseInt(date.substring(4, 6)), 
+				Integer.parseInt(date.substring(6, 8)), 0, 0, 0, 0);
+		return accountDailyRecordService.getItemizedAccountDailyRecord(username, currentDate);
 	}
 
 }

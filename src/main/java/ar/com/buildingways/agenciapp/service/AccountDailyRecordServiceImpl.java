@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
+import ar.com.buildingways.agenciapp.repository.AccountDailyRecordRepository;
 import ar.com.buildingways.agenciapp.repository.AccountRepository;
 import ar.com.buildingways.agenciapp.utils.SQLQueries;
 
@@ -28,6 +29,9 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 	
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private AccountDailyRecordRepository accountDailyRecordRepository;
 	
 	@Override
 	public Collection<AccountDailyRecord> loadAccountDailyRecords(DateTime currentDate) {
@@ -55,17 +59,18 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 			ac.setType((String) item[10]);
 			accountDailyRecords.add(ac);
 		}
+		accountDailyRecordRepository.saveAll(accountDailyRecords);		
 		return accountDailyRecords;
 	}
 	
 	@Override
-	public Collection<AccountDailyRecord> getAccountDailyRecord(int username, DateTime currentDate) {
+	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord(int username, DateTime currentDate) {
 		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
 		return accountDailyRecords;
 	}
 	
 	@Override
-	public Collection<AccountDailyRecord> getAccountDailyRecordByGame(int username, DateTime currentDate) {
+	public Collection<AccountDailyRecord> getItemizedAccountDailyRecord(int username, DateTime currentDate) {
 		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
 		return accountDailyRecords;
 	}

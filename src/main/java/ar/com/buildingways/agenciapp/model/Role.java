@@ -12,13 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "ROLES")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  		  property = "id")
 public class Role {
 	
 	private int id;
 	private String name;
 	private String description;
+	@JsonBackReference
 	private Set<User> users = new HashSet<User>(0);
 
 	@Id

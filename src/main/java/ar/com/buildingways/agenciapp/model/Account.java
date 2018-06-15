@@ -17,13 +17,20 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "ACCOUNTS")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  		  property = "userId")
 public class Account {
 	
 	private int userId;
 	private User user;
 	private int accountNumber;
+	@JsonBackReference
 	private Set<AccountDailyRecord> accountDailyRecords = new HashSet<AccountDailyRecord>(0);
 	private int branchNumber;
 	private String holder;
@@ -38,27 +45,6 @@ public class Account {
 	private boolean enabled;
 	private boolean deleted;
 	
-	public Account() {}
-
-	public Account(User user, int accountNumber, int branchNumber, String holder, char directDebit, String accountType,
-			double grossIncomePercentage, String cbu, String createdBy, DateTime createdDate, String lastModifiedBy,
-			DateTime lastModifiedDate, boolean enabled, boolean deleted) {
-		this.user = user;
-		this.accountNumber = accountNumber;
-		this.branchNumber = branchNumber;
-		this.holder = holder;
-		this.directDebit = directDebit;
-		this.accountType = accountType;
-		this.grossIncomePercentage = grossIncomePercentage;
-		this.cbu = cbu;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
-		this.enabled = enabled;
-		this.deleted = deleted;
-	}
-	
 	@Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
@@ -70,7 +56,7 @@ public class Account {
 		this.userId = userId;
 	}
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  
+	@OneToOne(cascade = CascadeType.ALL)  
     @PrimaryKeyJoinColumn  
 	public User getUser() {
 		return user;
@@ -87,7 +73,7 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@OneToMany(mappedBy = "account")
 	public Set<AccountDailyRecord> getAccountDailyRecords() {
 		return accountDailyRecords;
 	}
