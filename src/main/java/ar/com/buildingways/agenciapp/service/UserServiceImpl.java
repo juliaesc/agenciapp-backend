@@ -1,10 +1,8 @@
 package ar.com.buildingways.agenciapp.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -39,10 +37,20 @@ public class UserServiceImpl implements UserService{
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
-	public void loadUsers() {
+	public void updateUsers() {
+		Collection<Object[]> users = loadUsers();
+		insertUsers(users);
+		
+	}
+	
+	private Collection<Object[]> loadUsers() {
 		Query query = entityManager.createNativeQuery(SQLQueries.LOAD_USERS);
 		@SuppressWarnings("unchecked")
 		Collection<Object[]> queryResults = query.getResultList();
+		return queryResults;		
+	}
+		
+	private void insertUsers(Collection<Object[]> queryResults) {
 		Iterator<Object[]> it = queryResults.iterator();
 		while (it.hasNext()) {
 			Object[] item = (Object[])it.next();
@@ -63,39 +71,20 @@ public class UserServiceImpl implements UserService{
 			user.setRole(roleRepository.findByName(Constants.ROL_USUARIO));
 			user.setEnabled(true);
 			
-			UserDetails ud = new UserDetails();
-			ud.setAddress((String) item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5]);
-			ud.setEmail((String) item[16]);
-			ud.setStoreOwner((String) item[1]);
-			ud.setTradeName((String) item[15]);
-			ud.setCuit(((BigDecimal) item[8]).longValue());
-			ud.setCommissionAgent(((BigDecimal) item[6]).shortValue());
-			ud.setTerminalQuantity(((BigDecimal) item[7]).intValue());
-			ud.setCreatedBy(user.getCreatedBy());
-			ud.setCreatedDate(user.getCreatedDate());
-			ud.setLastModifiedBy(user.getLastModifiedBy());
-			ud.setLastModifiedDate(user.getLastModifiedDate());
-			ud.setDeleted(user.isDeleted());
-			ud.setEnabled(user.isEnabled());
+			UserDetails ud = new UserDetails((String) item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5],
+					(String) item[16],(String) item[1],(String) item[15],((BigDecimal) item[8]).longValue(),
+					((BigDecimal) item[6]).shortValue(),((BigDecimal) item[7]).intValue(),
+					user.getCreatedBy(),user.getCreatedDate(),user.getLastModifiedBy(),user.getLastModifiedDate(),
+					user.isEnabled(),user.isDeleted());
 			
 			user.setUserDetails(ud);
 			ud.setUser(user);
 			ud.setUserId(user.getId());
 						
-			Account a = new Account();
-			a.setAccountNumber(((BigDecimal) item[10]).intValue());
-			a.setBranchNumber(((BigDecimal) item[9]).intValue());
-			a.setHolder((String) item[1]);
-			a.setDirectDebit((char) item[11]);
-			a.setAccountType((String)item[12]);
-			a.setGrossIncomePercentage(((BigDecimal) item[13]).doubleValue());
-			a.setCbu((String) item[14]);
-			a.setCreatedBy(user.getCreatedBy());
-			a.setCreatedDate(user.getCreatedDate());
-			a.setLastModifiedBy(user.getLastModifiedBy());
-			a.setLastModifiedDate(user.getLastModifiedDate());
-			a.setDeleted(user.isDeleted());
-			a.setEnabled(user.isEnabled());
+			Account a = new Account(((BigDecimal) item[10]).intValue(),((BigDecimal) item[9]).intValue(),
+					(String) item[1],(char) item[11],(String)item[12],((BigDecimal) item[13]).doubleValue(),(String) item[14],
+					user.getCreatedBy(),user.getCreatedDate(),user.getLastModifiedBy(),user.getLastModifiedDate(),
+					user.isEnabled(),user.isDeleted());
 
 			user.setAccount(a);
 			a.setUser(user);
@@ -104,25 +93,5 @@ public class UserServiceImpl implements UserService{
 			userRepository.save(user);
 		}
 	}
-	
-	@Override
-	public Collection<Integer> getLegajos() {
-		Collection<Integer>legajos = new ArrayList<Integer>();
-		Iterator<User> usersList = userRepository.findAll().iterator();
-		while(usersList.hasNext()) {
-			usersList.next();
-			legajos.add(usersList.next().getUsername());
-		}
-		return legajos;
-	}
-	
-	@Override
-	public User findUserByUsername(int username) {
-		return userRepository.findByUsername(username);
-	}
 
-	@Override
-	public List<User> findAllUsers() {
-		return (List<User>) userRepository.findAll();
-	}
 }

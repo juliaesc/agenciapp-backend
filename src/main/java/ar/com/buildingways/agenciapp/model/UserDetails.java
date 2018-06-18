@@ -33,6 +33,11 @@ public class UserDetails {
 	private boolean enabled;
 	private boolean deleted;
 
+ 	public UserDetails(String address, String email, String storeOwner, String tradeName, long cuit, short commissionAgent,
+			int terminalQuantity, String createdBy, DateTime createdDate, String lastModifiedBy, DateTime lastModifiedDate,
+			boolean enabled, boolean deleted) {
+	}
+
  	@Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 

@@ -45,6 +45,11 @@ public class Account {
 	private boolean enabled;
 	private boolean deleted;
 	
+	public Account(int accountNumber, int branchNumber, String holder, char directDebit, String accountType, double grossIncomePercentage,
+			String cbu, String createdBy, DateTime createdDate, String lastModifiedBy,
+			DateTime lastModifiedDate, boolean enabled, boolean deleted) {
+	}
+
 	@Id  
     @GeneratedValue(generator="myGenerator")  
     @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
