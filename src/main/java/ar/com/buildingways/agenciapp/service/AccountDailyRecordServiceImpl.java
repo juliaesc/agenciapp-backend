@@ -34,44 +34,51 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 	private AccountDailyRecordRepository accountDailyRecordRepository;
 	
 	@Override
-	public Collection<AccountDailyRecord> loadAccountDailyRecords(DateTime currentDate) {
-		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
+	public void updateAccountDailyRecords() {
+		Collection<Object[]> accountDailyRecords = loadAccountDailyRecords();
+		insertAccountDailyRecords(accountDailyRecords);	
+	}
+	
+	private Collection<Object[]> loadAccountDailyRecords() {
 		StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery(SQLQueries.LOAD_ACCOUNT_DAILY_RECORDS);
 		String param = "fecha_actual";
 		storedProcedure.registerStoredProcedureParameter(param, Date.class, ParameterMode.IN);
+		// Se fija esta fecha para pruebas por los datos disponibles en la BD CCorrientes en Desarrollo.
+		// En Producción, se va a pasar la fecha actual.
+		DateTime currentDate = new DateTime(2015, 12, 17, 0, 0, 0);
 		Date currentSQLDate = new Date(currentDate.toDateTime().getMillis());
 		storedProcedure.setParameter(param, currentSQLDate);
 		@SuppressWarnings("unchecked")
 		Collection<Object[]> storedProcedureResults = storedProcedure.getResultList();
+		return storedProcedureResults;
+	}
+	
+	private void insertAccountDailyRecords(Collection<Object[]> storedProcedureResults) {
+		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
 		Iterator<Object[]> it = storedProcedureResults.iterator();
 		while (it.hasNext()) {
 			Object[] item = (Object[])it.next();
-			AccountDailyRecord ac = new AccountDailyRecord();
-			ac.setAccount(accountRepository.findByAccountNumber((Integer) item[1]));
-			ac.setGame((String) item[2]);
-			ac.setDrawNumber((Integer) item[3]);
-			ac.setDueDate(new DateTime((Timestamp) item[4]));
-			ac.setDebt(((BigDecimal) item[5]).doubleValue());
-			ac.setCredit(((BigDecimal) item[6]).doubleValue());
-			ac.setInterest(((BigDecimal) item[7]).doubleValue());
-			ac.setState((String) item[8]);
-			ac.setCurrency((String) item[9]);
-			ac.setType((String) item[10]);
+			AccountDailyRecord ac = new AccountDailyRecord(accountRepository.findByAccountNumber((Integer) item[1]),
+					(String) item[2],(Integer) item[3],new DateTime((Timestamp) item[4]),((BigDecimal) item[5]).doubleValue(),
+					((BigDecimal) item[6]).doubleValue(),((BigDecimal) item[7]).doubleValue(),
+					(String) item[8],(String) item[9],(String) item[10]);
 			accountDailyRecords.add(ac);
 		}
 		accountDailyRecordRepository.saveAll(accountDailyRecords);		
+
+	}
+	
+	@Override
+	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord() {
+		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
+		// Implementación pendiente.
 		return accountDailyRecords;
 	}
 	
 	@Override
-	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord(int username, DateTime currentDate) {
+	public Collection<AccountDailyRecord> getItemizedAccountDailyRecord() {
 		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
-		return accountDailyRecords;
-	}
-	
-	@Override
-	public Collection<AccountDailyRecord> getItemizedAccountDailyRecord(int username, DateTime currentDate) {
-		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
+		// Implementación pendiente.
 		return accountDailyRecords;
 	}
 

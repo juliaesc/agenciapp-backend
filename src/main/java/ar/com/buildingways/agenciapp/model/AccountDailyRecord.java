@@ -35,6 +35,10 @@ public class AccountDailyRecord {
 	private int drawNumber;
 	private String type;
 	
+	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
+			double debt, double credit, double interest, String state, String currency, String type) {
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false, columnDefinition = "numeric(10)")

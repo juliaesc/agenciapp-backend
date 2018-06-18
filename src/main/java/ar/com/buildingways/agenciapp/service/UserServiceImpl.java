@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void updateUsers() {
 		Collection<Object[]> users = loadUsers();
-		insertUsers(users);
-		
+		insertUsers(users);	
 	}
 	
 	private Collection<Object[]> loadUsers() {

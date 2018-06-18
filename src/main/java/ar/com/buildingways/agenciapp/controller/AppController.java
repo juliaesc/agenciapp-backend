@@ -2,12 +2,10 @@ package ar.com.buildingways.agenciapp.controller;
 
 import java.util.Collection;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,15 +45,15 @@ public class AppController {
 	 */
 	@GetMapping(value="/updateUsers")
 	public void updateUsers() {
-		return userService.updateUsers();
+		userService.updateUsers();
 	}
 	
 	/** Actualiza diariamente los movimientos de cuenta de los usuarios habilitados para usar la aplicación
 	 *	que se encuentran en la tabla AccountDailyRecords.
 	 */
 	@GetMapping(value="/updateAccountDailyRecords")
-	public Collection<AccountDailyRecord> loadAccountDailyRecords() {
-		return accountDailyRecordService.updateAccountDailyRecords();
+	public void updateAccountDailyRecords() {
+		accountDailyRecordService.updateAccountDailyRecords();
 	}
 
 	/** Consulta el resultado de los movimientos de cuenta para un agenciero en el día de la fecha.
