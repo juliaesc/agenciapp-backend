@@ -37,6 +37,16 @@ public class AccountDailyRecord {
 	
 	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
 			double debt, double credit, double interest, String state, String currency, String type) {
+		this.account = account;
+		this.game = game;
+		this.drawNumber = drawNumber;
+		this.dueDate = dueDate;
+		this.debt = debt;
+		this.credit = credit;
+		this.interest = interest;
+		this.state = state;
+		this.currency = currency;
+		this.type = type;
 	}
 	
 	@Id

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
 import ar.com.buildingways.agenciapp.repository.AccountDailyRecordRepository;
 import ar.com.buildingways.agenciapp.repository.AccountRepository;
-import ar.com.buildingways.agenciapp.utils.SQLQueries;
+import ar.com.buildingways.agenciapp.util.SQLQueries;
 
 @Service("accountActivityService")
 public class AccountDailyRecordServiceImpl implements AccountDailyRecordService {

@@ -18,8 +18,8 @@ import ar.com.buildingways.agenciapp.model.User;
 import ar.com.buildingways.agenciapp.model.UserDetails;
 import ar.com.buildingways.agenciapp.repository.RoleRepository;
 import ar.com.buildingways.agenciapp.repository.UserRepository;
-import ar.com.buildingways.agenciapp.utils.Constants;
-import ar.com.buildingways.agenciapp.utils.SQLQueries;
+import ar.com.buildingways.agenciapp.util.Constants;
+import ar.com.buildingways.agenciapp.util.SQLQueries;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
@@ -38,11 +38,11 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void updateUsers() {
-		Collection<Object[]> users = loadUsers();
-		insertUsers(users);	
+		Collection<Object[]> queryResults = loadQueryResults();
+		insertUsers(queryResults);
 	}
 	
-	private Collection<Object[]> loadUsers() {
+	private Collection<Object[]> loadQueryResults() {
 		Query query = entityManager.createNativeQuery(SQLQueries.LOAD_USERS);
 		@SuppressWarnings("unchecked")
 		Collection<Object[]> queryResults = query.getResultList();
@@ -55,42 +55,40 @@ public class UserServiceImpl implements UserService{
 			Object[] item = (Object[])it.next();
 			User user = userRepository.findByUsername(((BigDecimal) item[0]).intValue());
 			if (user != null) {
-				// Cuando se implemente el logueo por Active Directory, irá el nombre del usuario que ejecutó la importación del archivo de agencias.
 				user.setLastModifiedBy("escobjul");
 				user.setLastModifiedDate(new DateTime());
 			} else {
-				user = new User();
-				user.setUsername(((BigDecimal) item[0]).intValue());
-				// Cuando se implemente el logueo por Active Directory, irá el nombre del usuario que ejecutó la importación del archivo de agencias.
-				user.setCreatedBy("escobjul");
-				user.setCreatedDate(new DateTime());
-				// Definir con qué credenciales se va a loguear.
-				// user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));		
-			}	
+				user = new User(((BigDecimal) item[0]).intValue(), "escobjul", new DateTime());
+				// user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));	
+			}	 
 			user.setRole(roleRepository.findByName(Constants.ROL_USUARIO));
-			user.setEnabled(true);
-			
-			UserDetails ud = new UserDetails((String) item[2] + " N° " + item[3] + " Localidad: " + item[4] + " C.P.: " + item[5],
-					(String) item[16],(String) item[1],(String) item[15],((BigDecimal) item[8]).longValue(),
-					((BigDecimal) item[6]).shortValue(),((BigDecimal) item[7]).intValue(),
-					user.getCreatedBy(),user.getCreatedDate(),user.getLastModifiedBy(),user.getLastModifiedDate(),
-					user.isEnabled(),user.isDeleted());
-			
-			user.setUserDetails(ud);
-			ud.setUser(user);
-			ud.setUserId(user.getId());
-						
-			Account a = new Account(((BigDecimal) item[10]).intValue(),((BigDecimal) item[9]).intValue(),
-					(String) item[1],(char) item[11],(String)item[12],((BigDecimal) item[13]).doubleValue(),(String) item[14],
-					user.getCreatedBy(),user.getCreatedDate(),user.getLastModifiedBy(),user.getLastModifiedDate(),
-					user.isEnabled(),user.isDeleted());
-
+			user.setEnabled(true);	
+			UserDetails ud = createUserDetails(item, user);	
+			Account a = createAccount(item, user);
 			user.setAccount(a);
-			a.setUser(user);
-			a.setUserId(user.getId());
-			
+			user.setUserDetails(ud);
 			userRepository.save(user);
 		}
+	}
+	
+	private UserDetails createUserDetails(Object[] item, User user) {
+		UserDetails ud = new UserDetails((String) item[2], (String) item[13], (String) item[1], (String) item[12], 
+				((BigDecimal) item[5]).longValue(), ((BigDecimal) item[3]).intValue(), ((BigDecimal) item[4]).shortValue(),
+				user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
+				user.isEnabled(), user.isDeleted());
+		ud.setUser(user);
+		ud.setUserId(user.getId());
+		return ud;
+	}
+	
+	private Account createAccount(Object[] item, User user) {
+		Account a = new Account(((BigDecimal) item[7]).intValue(), ((BigDecimal) item[6]).intValue(),
+				(String) item[1], (char) item[8], (String)item[9], ((BigDecimal) item[10]).doubleValue(), (String) item[11],
+				user.getCreatedBy(),user.getCreatedDate(),user.getLastModifiedBy(),user.getLastModifiedDate(),
+				user.isEnabled(),user.isDeleted());
+		a.setUser(user);
+		a.setUserId(user.getId());
+		return a;
 	}
 
 }

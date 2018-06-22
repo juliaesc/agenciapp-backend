@@ -1,20 +1,10 @@
 USE [AgenciApp_DB]
 GO
---ALTER VIEW [dbo].[e_v_BConcesionario] 
+--ALTER VIEW [dbo].[v_Users] 
 AS
-select cast(n_legajo as numeric(8)) as legajo,
-	   cast(RTRIM(xc_nombrefantasia) as varchar(80)) as nombre_agencia
-from PJuegos.dbo.bconcesionario
-where n_legajo between 700000 and 790000 and c_estado not IN ('C','J','G','R')
-GO
-
-USE [AgenciApp_DB]
-GO
---ALTER VIEW [dbo].[e_v_Agenciero] 
-AS
-select cast(n_legajo as numeric(8)) as legajo, 
-	   RTRIM(t_apyn) as titular_agencia, 
-	   RTRIM(t_calle) as calle, RTRIM(t_numero) as numero, RTRIM(t_localidad) as localidad, RTRIM(c_codigopostal) as cp, 
+select cast(ag.n_legajo as numeric(8)) as legajo,
+	   RTRIM(t_apyn) as titular_agencia,
+	   isnull(RTRIM(t_calle),'') + ' Nº ' + isnull(RTRIM(t_numero),'') + ' Localidad: ' + isnull(RTRIM(a.t_localidad),'') + ' C.P.: ' + isnull(RTRIM(a.c_codigopostal),'') as direccion, 
 	   cast(c_comisionista as numeric(3)) as comisionista, 
 	   cast(n_cantterminales as numeric(3)) as cant_terminales,
 	   cast(n_cuit as numeric(15)) as cuit, 
@@ -23,32 +13,21 @@ select cast(n_legajo as numeric(8)) as legajo,
 	   c_DebAut as tiene_DA, 
 	   cast(RTRIM(t_tipocuenta) as varchar(20)) as tipo_cuenta, 
 	   cast(n_porcenIB as decimal(5,2)) as porc_IIBB, 
-	   cast((t_CBU_1 + t_CBU_2) as varchar(50)) as cbu
-from CCorrientes.dbo.Agenciero a
-   inner join CCorrientes.dbo.TipoCuenta tc
-	   on a.c_tipocuenta = tc.c_tipocuenta  
-GO
-
-USE [AgenciApp_DB]
-GO
---ALTER VIEW [dbo].[e_v_TPadronEmail] 
-AS
-select cast(n_legajo as numeric(8)) as legajo, 
+	   cast((t_CBU_1 + t_CBU_2) as varchar(50)) as cbu,
+	   cast(RTRIM(xc_nombrefantasia) as varchar(80)) as nombre_agencia,
 	   cast(RTRIM(t_email) as varchar(30)) as mail
-from PadronMensajeria.dbo.TPadron tp
-inner join PadronMensajeria.dbo.TPadronEmail tpe
-on tp.c_padron = tpe.c_padron 
-GO
-
---Sólo para tres usuarios por ahora, para pruebas
-USE [AgenciApp_DB]
-GO
---ALTER VIEW [dbo].[v_Users] 
-AS
-select cc.*, ag.nombre_agencia, ce.mail from e_v_BConcesionario ag
-inner join e_v_Agenciero cc
-	on ag.legajo = cc.legajo
-inner join e_v_TPadronEmail ce
-	on ag.legajo = ce.legajo
-where ag.legajo in (700058, 723204, 701233)
+from PJuegos.dbo.bconcesionario ag
+inner join
+	CCorrientes.dbo.Agenciero a
+		on ag.n_legajo = a.n_legajo
+inner join
+	CCorrientes.dbo.TipoCuenta tc
+		on a.c_tipocuenta = tc.c_tipocuenta
+inner join
+	PadronMensajeria.dbo.TPadron tp
+		on ag.n_legajo = tp.n_legajo
+inner join
+	PadronMensajeria.dbo.TPadronEmail tpe
+		on tp.c_padron = tpe.c_padron
+where ag.n_legajo in (700058, 723204, 701233, 746666, 758530, 736442) and ag.n_legajo between 700000 and 790000 and ag.c_estado not IN ('C','J','G','R')
 GO

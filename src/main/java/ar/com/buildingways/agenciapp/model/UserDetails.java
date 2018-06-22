@@ -33,10 +33,25 @@ public class UserDetails {
 	private boolean enabled;
 	private boolean deleted;
 
- 	public UserDetails(String address, String email, String storeOwner, String tradeName, long cuit, short commissionAgent,
+	public UserDetails() {}
+	
+ 	public UserDetails(String address, String email, String storeOwner, String tradeName, long cuit, int commissionAgent,
 			int terminalQuantity, String createdBy, DateTime createdDate, String lastModifiedBy, DateTime lastModifiedDate,
 			boolean enabled, boolean deleted) {
-	}
+ 		this.address = address;
+ 		this.email = email;
+ 		this.storeOwner = storeOwner;
+ 		this.tradeName = tradeName;
+ 		this.cuit = cuit;
+ 		this.commissionAgent = commissionAgent;
+ 		this.terminalQuantity = terminalQuantity;
+ 		this.createdBy = createdBy;
+ 		this.createdDate = createdDate;
+ 		this.lastModifiedBy = lastModifiedBy;
+ 		this.lastModifiedDate = lastModifiedDate;
+ 		this.enabled = enabled;
+ 		this.deleted = deleted;
+ 	}
 
  	@Id  
     @GeneratedValue(generator="myGenerator")  

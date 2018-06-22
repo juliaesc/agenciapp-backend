@@ -1,4 +1,4 @@
-package ar.com.buildingways.agenciapp.utils;
+package ar.com.buildingways.agenciapp.util;
 
 public class SQLQueries {
 

@@ -32,7 +32,8 @@ INNER JOIN CCorrientes.dbo.v_Evento ev ON l.f_Evento = ev.f_evento and l.c_explo
 INNER JOIN CCorrientes.dbo.v_MacroliquidacionLiquidacion ml ON l.c_Liquidacion = ml.c_Liquidacion
 INNER JOIN CCorrientes.dbo.v_MacroLiquidacion m ON ml.c_MacroLiquidacion = m.c_MacroLiquidacion
 WHERE m.c_operacion in (SELECT distinct c_operacion as operaciones FROM CCorrientes.dbo.v_MacroLiquidacion
-where CONVERT(DATE,f_macroliquidacion) = @fecha_actual and c_operatoria in ('DA', 'CA', 'CT', 'LI', 'LL', 'LV')) and l.n_legajo in (723204,700058,701233)
+where CONVERT(DATE,f_macroliquidacion) = @fecha_actual and c_operatoria in ('DA', 'CA', 'CT', 'LI', 'LL', 'LV')) 
+and l.n_legajo in (700058, 723204, 701233, 746666, 758530, 736442)
 
 SELECT @rc = @@error,@CntFilas = @@RowCount 
 
@@ -40,3 +41,5 @@ if @rc <> 0
 	return @rc
 if @CntFilas = 0
 	return -501
+
+GO

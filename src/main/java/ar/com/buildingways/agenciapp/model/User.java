@@ -41,6 +41,14 @@ public class User {
 	private boolean enabled;
 	private boolean deleted;
 	
+	public User() {}
+	
+	public User(int username, String createdBy, DateTime createdDate) {
+		this.username = username;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false, columnDefinition = "numeric(8)")
