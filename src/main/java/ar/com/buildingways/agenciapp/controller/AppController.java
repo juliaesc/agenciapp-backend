@@ -27,7 +27,6 @@ public class AppController {
 	UserService userService;
 	
 	/** Login de la aplicación.
-	 *
 	 */
 	@PostMapping(value="/login", produces="application/json")
 	public ResponseEntity<User> login(@RequestBody User user) {
