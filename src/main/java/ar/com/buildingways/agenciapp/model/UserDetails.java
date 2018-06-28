@@ -1,5 +1,7 @@
 package ar.com.buildingways.agenciapp.model;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -177,4 +179,34 @@ public class UserDetails {
 		this.deleted = deleted;
 	}
 		
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDetails)) return false;
+        UserDetails userDetails = (UserDetails) o;
+        return Objects.equals(getUserId(), userDetails.getUserId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId());
+    }
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+	    String NEW_LINE = System.getProperty("line.separator");
+
+	    result.append(this.getClass().getName() + " DETALLES {" + NEW_LINE);
+	    result.append(" Domicilio: " + this.getAddress() + NEW_LINE);
+	    result.append(" Email: " + this.getEmail() + NEW_LINE);
+	    result.append(" Razón social: " + this.getStoreOwner() + NEW_LINE );
+	    result.append(" Nombre de fantasía: " + this.getTradeName() + NEW_LINE );
+	    result.append(" CUIT: " + this.getCuit() + NEW_LINE );
+	    result.append(" Comisionista: " + this.getCommissionAgent() + NEW_LINE );
+	    result.append(" Cantidad de terminales: " + this.getTerminalQuantity() + NEW_LINE );
+	    result.append("}");
+
+	    return result.toString();
+	}
 }

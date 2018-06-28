@@ -1,6 +1,7 @@
 package ar.com.buildingways.agenciapp.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -220,4 +221,35 @@ public class Account {
 		this.deleted = deleted;
 	}
 
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Account)) return false;
+        Account account = (Account) o;
+        return Objects.equals(getUserId(), account.getUserId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId());
+    }
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+	    String NEW_LINE = System.getProperty("line.separator");
+
+	    result.append(this.getClass().getName() + " CUENTA {" + NEW_LINE);
+	    result.append(" Nº de cuenta: " + this.getAccountNumber() + NEW_LINE);
+	    result.append(" Sucursal: " + this.getBranchNumber() + NEW_LINE);
+	    result.append(" Titular: " + this.getHolder() + NEW_LINE );
+	    result.append(" Adherido al débito: " + this.getDirectDebit() + NEW_LINE );
+	    result.append(" Tipo de cuenta: " + this.getAccountType() + NEW_LINE );
+	    result.append(" % retención IIBB: " + this.getGrossIncomePercentage() + NEW_LINE );
+	    result.append(" CBU: " + this.getCbu() + NEW_LINE );
+	    result.append(" Registros diarios de estado de cuenta: " + this.getAccountDailyRecords().toString() + NEW_LINE );
+	    result.append("}");
+
+	    return result.toString();
+	}
 }

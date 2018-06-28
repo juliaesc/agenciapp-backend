@@ -1,5 +1,7 @@
 package ar.com.buildingways.agenciapp.model;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.NaturalId;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Transient;
 
@@ -28,6 +31,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class User {
 	
 	private int id;
+	@NaturalId
 	private int username;
 	private String password;
 	@JsonManagedReference
@@ -148,4 +152,39 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getUsername());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getUsername(), user.getUsername());
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+	    String NEW_LINE = System.getProperty("line.separator");
+
+	    result.append(this.getClass().getName() + " USUARIO {" + NEW_LINE);
+	    result.append(" Nommbre de usuario (legajo): " + this.getUsername() + NEW_LINE);
+	    result.append(" Rol: " + this.getRole().getName() + NEW_LINE);
+	    result.append(" Detalles: " + this.getUserDetails().toString() + NEW_LINE );
+	    result.append(" Cuenta: " + this.getAccount().toString() + NEW_LINE);
+	    result.append(" Creado por: " + this.getCreatedBy() + NEW_LINE);
+	    result.append(" Fecha de creación: " + this.getCreatedDate() + NEW_LINE);
+	    result.append(" Modificado por: " + this.getLastModifiedBy() + NEW_LINE);
+	    result.append(" Fecha de modificación: " + this.getLastModifiedDate() + NEW_LINE);
+	    result.append(" Habilitado: " + this.isEnabled() + NEW_LINE);
+	    result.append(" Eliminado: " + this.isDeleted() + NEW_LINE);
+	    result.append("}");
+
+	    return result.toString();
+	}
+	
 }

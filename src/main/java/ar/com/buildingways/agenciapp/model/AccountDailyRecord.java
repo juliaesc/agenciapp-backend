@@ -1,5 +1,7 @@
 package ar.com.buildingways.agenciapp.model;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -138,6 +140,40 @@ public class AccountDailyRecord {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountDailyRecord)) return false;
+        AccountDailyRecord accountDailyRecord = (AccountDailyRecord) o;
+        return Objects.equals(getAccount().getUserId(), accountDailyRecord.getAccount().getUserId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAccount().getUserId());
+    }
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+	    String NEW_LINE = System.getProperty("line.separator");
+
+	    result.append(this.getClass().getName() + " LIQUIDACIONES {" + NEW_LINE);
+	    result.append(" Tipo: " + this.getType() + NEW_LINE );
+	    result.append(" Juego: " + this.getGame() + NEW_LINE );
+	    result.append(" Nº sorteo: " + this.getDrawNumber() + NEW_LINE );
+	    result.append(" Moneda: " + this.getCurrency() + NEW_LINE);
+	    result.append(" Débitos: " + this.getDebt() + NEW_LINE);
+	    result.append(" Créditos: " + this.getCredit() + NEW_LINE );
+	    result.append(" Intereses: " + this.getInterest() + NEW_LINE );
+	    result.append(" Fecha de vencimiento: " + this.getDueDate() + NEW_LINE );
+	    result.append(" Estado: " + this.getState() + NEW_LINE );
+
+	    result.append("}");
+
+	    return result.toString();
 	}
 	
 }

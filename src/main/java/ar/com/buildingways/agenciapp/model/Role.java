@@ -1,6 +1,7 @@
 package ar.com.buildingways.agenciapp.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -60,5 +61,38 @@ public class Role {
 	}
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
+        return Objects.equals(getId(), role.getId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+	    String NEW_LINE = System.getProperty("line.separator");
+
+	    result.append(this.getClass().getName() + " ROLE {" + NEW_LINE);
+	    result.append(" Nombre: " + this.getName() + NEW_LINE);
+	    result.append(" Descripción: " + this.getDescription() + NEW_LINE);
+	    String users = " Usuarios con este rol: ";
+	    for (User user : this.getUsers()) {
+			users+=user.getUsername();
+			result.append(", ");
+		}
+	    users = users.substring(0, users.length() - 2);
+	    result.append(users + NEW_LINE);
+	    result.append("}");
+
+	    return result.toString();
 	}
 }
