@@ -6,22 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import ar.com.buildingways.agenciapp.dao.UserRepositoryCustom;
+import ar.com.buildingways.agenciapp.dao.UserDao;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
 	@Autowired
-	@Qualifier("userRepositoryCustomImpl")
-	private UserRepositoryCustom userRepositoryCustom;
+	@Qualifier("userDaoImpl")
+	private UserDao userDaoImpl;
 	
 	/** Actualiza diariamente la BD de usuarios recuperando las agencias activas y sus datos
 	 * por medio de una vista que apunta a varias BD de Lotería.
 	 */
 	@Override
 	public void updateUsers() {
-		Collection<Object[]> usersFromDB = userRepositoryCustom.loadUsersFromDB();
-		userRepositoryCustom.insertUsers(usersFromDB);
+		Collection<Object[]> usersFromDB = userDaoImpl.loadUsersFromDB();
+		userDaoImpl.insertUsers(usersFromDB);
 	}
 
 }

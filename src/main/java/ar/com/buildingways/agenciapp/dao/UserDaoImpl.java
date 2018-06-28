@@ -19,7 +19,7 @@ import ar.com.buildingways.agenciapp.repository.UserRepository;
 import ar.com.buildingways.agenciapp.util.Constants;
 import ar.com.buildingways.agenciapp.util.SQLQueries;
 
-public class UserRepositoryCustomImpl implements UserRepositoryCustom {
+public class UserDaoImpl implements UserDao {
 
 	@Autowired 
 	private UserRepository userRepository;

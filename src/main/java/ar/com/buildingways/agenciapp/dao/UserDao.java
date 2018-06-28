@@ -2,7 +2,7 @@ package ar.com.buildingways.agenciapp.dao;
 
 import java.util.Collection;
 
-public interface UserRepositoryCustom {
+public interface UserDao {
 	
 	Collection<Object[]> loadUsersFromDB();
 	
