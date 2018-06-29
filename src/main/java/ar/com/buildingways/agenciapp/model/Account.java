@@ -239,16 +239,15 @@ public class Account {
 		StringBuilder result = new StringBuilder();
 	    String NEW_LINE = System.getProperty("line.separator");
 
-	    result.append(this.getClass().getName() + " CUENTA {" + NEW_LINE);
-	    result.append(" Nº de cuenta: " + this.getAccountNumber() + NEW_LINE);
-	    result.append(" Sucursal: " + this.getBranchNumber() + NEW_LINE);
-	    result.append(" Titular: " + this.getHolder() + NEW_LINE );
-	    result.append(" Adherido al débito: " + this.getDirectDebit() + NEW_LINE );
-	    result.append(" Tipo de cuenta: " + this.getAccountType() + NEW_LINE );
-	    result.append(" % retención IIBB: " + this.getGrossIncomePercentage() + NEW_LINE );
-	    result.append(" CBU: " + this.getCbu() + NEW_LINE );
-	    result.append(" Registros diarios de estado de cuenta: " + this.getAccountDailyRecords().toString() + NEW_LINE );
-	    result.append("}");
+	    result.append("--- CUENTA ---" + NEW_LINE);
+	    result.append("Nº de cuenta: " + this.getAccountNumber() + NEW_LINE);
+	    result.append("Sucursal: " + this.getBranchNumber() + NEW_LINE);
+	    result.append("Titular: " + this.getHolder() + NEW_LINE);
+	    result.append("Adherido al débito: " + this.getDirectDebit() + NEW_LINE);
+	    result.append("Tipo de cuenta: " + this.getAccountType() + NEW_LINE);
+	    result.append("% retención IIBB: " + this.getGrossIncomePercentage() + NEW_LINE);
+	    result.append("CBU: " + this.getCbu() + NEW_LINE);
+	    result.append(this.getAccountDailyRecords().toString() + NEW_LINE);
 
 	    return result.toString();
 	}

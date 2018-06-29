@@ -171,18 +171,17 @@ public class User {
 		StringBuilder result = new StringBuilder();
 	    String NEW_LINE = System.getProperty("line.separator");
 
-	    result.append(this.getClass().getName() + " USUARIO {" + NEW_LINE);
-	    result.append(" Nommbre de usuario (legajo): " + this.getUsername() + NEW_LINE);
-	    result.append(" Rol: " + this.getRole().getName() + NEW_LINE);
-	    result.append(" Detalles: " + this.getUserDetails().toString() + NEW_LINE );
-	    result.append(" Cuenta: " + this.getAccount().toString() + NEW_LINE);
-	    result.append(" Creado por: " + this.getCreatedBy() + NEW_LINE);
-	    result.append(" Fecha de creación: " + this.getCreatedDate() + NEW_LINE);
-	    result.append(" Modificado por: " + this.getLastModifiedBy() + NEW_LINE);
-	    result.append(" Fecha de modificación: " + this.getLastModifiedDate() + NEW_LINE);
-	    result.append(" Habilitado: " + this.isEnabled() + NEW_LINE);
-	    result.append(" Eliminado: " + this.isDeleted() + NEW_LINE);
-	    result.append("}");
+	    result.append("********** USUARIO **********" + NEW_LINE);
+	    result.append("Nombre de usuario (legajo): " + this.getUsername() + NEW_LINE);
+	    result.append("Rol: " + this.getRole().getName() + NEW_LINE);
+	    result.append("Creado por: " + this.getCreatedBy() + NEW_LINE);
+	    result.append("Fecha de creación: " + this.getCreatedDate().toString("dd/MM/yyyy HH:mm:ss") + NEW_LINE);
+	    result.append("Modificado por: " + this.getLastModifiedBy() + NEW_LINE);
+	    result.append("Fecha de modificación: " + this.getLastModifiedDate().toString("dd/MM/yyyy HH:mm:ss") + NEW_LINE);
+	    result.append("Habilitado: " + this.isEnabled() + NEW_LINE);
+	    result.append("Eliminado: " + this.isDeleted() + NEW_LINE);
+	    result.append(this.getUserDetails().toString() + NEW_LINE);
+	    result.append(this.getAccount().toString() + NEW_LINE);
 
 	    return result.toString();
 	}

@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public void updateUsers() {
-		Collection<Object[]> usersFromDB = userDaoImpl.loadUsersFromDB();
-		userDaoImpl.insertUsers(usersFromDB);
+		Collection<Object[]> users = userDaoImpl.loadUsersFromDB();
+		userDaoImpl.insertUsers(users);
 	}
 
 }

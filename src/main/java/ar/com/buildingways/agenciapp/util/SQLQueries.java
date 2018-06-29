@@ -7,4 +7,7 @@ public class SQLQueries {
 	
 	// STORED PROCEDURES
 	public static final String LOAD_ACCOUNT_DAILY_RECORDS = "CC_LiquidacionPorJuegoEvento"; 
+	
+	// DELETES
+	public static final String DELETE_ACCOUNT_DAILY_RECORDS = "TRUNCATE TABLE account_daily_records";
 }

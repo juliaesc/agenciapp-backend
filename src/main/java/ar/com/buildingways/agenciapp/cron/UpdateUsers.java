@@ -23,7 +23,7 @@ public class UpdateUsers {
 	 * por medio de una vista que apunta a varias BD de Lotería.
 	 * Ejecución: de lunes a sábado a las 01:00:00 a.m.
 	 */
-	@Scheduled(cron = "0 1 * * 1-6")
+	@Scheduled(cron = "0 0 01 * * MON-FRI")
 	public void updateUsers() {
 	    logger.info("Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
 	    userService.updateUsers();	    

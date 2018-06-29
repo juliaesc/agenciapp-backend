@@ -197,15 +197,14 @@ public class UserDetails {
 		StringBuilder result = new StringBuilder();
 	    String NEW_LINE = System.getProperty("line.separator");
 
-	    result.append(this.getClass().getName() + " DETALLES {" + NEW_LINE);
-	    result.append(" Domicilio: " + this.getAddress() + NEW_LINE);
-	    result.append(" Email: " + this.getEmail() + NEW_LINE);
-	    result.append(" Razón social: " + this.getStoreOwner() + NEW_LINE );
-	    result.append(" Nombre de fantasía: " + this.getTradeName() + NEW_LINE );
-	    result.append(" CUIT: " + this.getCuit() + NEW_LINE );
-	    result.append(" Comisionista: " + this.getCommissionAgent() + NEW_LINE );
-	    result.append(" Cantidad de terminales: " + this.getTerminalQuantity() + NEW_LINE );
-	    result.append("}");
+	    result.append("--- DETALLES ---" + NEW_LINE);
+	    result.append("Domicilio: " + this.getAddress() + NEW_LINE);
+	    result.append("Email: " + this.getEmail() + NEW_LINE);
+	    result.append("Razón social: " + this.getStoreOwner() + NEW_LINE );
+	    result.append("Nombre de fantasía: " + this.getTradeName() + NEW_LINE);
+	    result.append("CUIT: " + this.getCuit() + NEW_LINE);
+	    result.append("Comisionista: " + this.getCommissionAgent() + NEW_LINE);
+	    result.append("Cantidad de terminales: " + this.getTerminalQuantity());
 
 	    return result.toString();
 	}

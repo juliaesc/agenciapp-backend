@@ -37,6 +37,8 @@ public class AccountDailyRecord {
 	private int drawNumber;
 	private String type;
 	
+	public AccountDailyRecord() {}
+
 	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
 			double debt, double credit, double interest, String state, String currency, String type) {
 		this.account = account;
@@ -160,18 +162,16 @@ public class AccountDailyRecord {
 		StringBuilder result = new StringBuilder();
 	    String NEW_LINE = System.getProperty("line.separator");
 
-	    result.append(this.getClass().getName() + " LIQUIDACIONES {" + NEW_LINE);
-	    result.append(" Tipo: " + this.getType() + NEW_LINE );
-	    result.append(" Juego: " + this.getGame() + NEW_LINE );
-	    result.append(" Nº sorteo: " + this.getDrawNumber() + NEW_LINE );
-	    result.append(" Moneda: " + this.getCurrency() + NEW_LINE);
-	    result.append(" Débitos: " + this.getDebt() + NEW_LINE);
-	    result.append(" Créditos: " + this.getCredit() + NEW_LINE );
-	    result.append(" Intereses: " + this.getInterest() + NEW_LINE );
-	    result.append(" Fecha de vencimiento: " + this.getDueDate() + NEW_LINE );
-	    result.append(" Estado: " + this.getState() + NEW_LINE );
-
-	    result.append("}");
+	    result.append("--- REGISTROS DIARIOS DE ESTADO DE CUENTA --- " + NEW_LINE);
+	    result.append("Tipo: " + this.getType() + " | ");
+	    result.append("Juego: " + this.getGame() + " | ");
+	    result.append("Nº sorteo: " + this.getDrawNumber() + " | ");
+	    result.append("Moneda: " + this.getCurrency() + " | ");
+	    result.append("Débitos: " + this.getDebt() + " | ");
+	    result.append("Créditos: " + this.getCredit() + " | ");
+	    result.append("Intereses: " + this.getInterest() + " | ");
+	    result.append("Fecha de vencimiento: " + this.getDueDate().toString("dd/MM/yyyy") + " | ");
+	    result.append("Estado: " + this.getState());
 
 	    return result.toString();
 	}
