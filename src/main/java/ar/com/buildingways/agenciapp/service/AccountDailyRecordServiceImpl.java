@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.buildingways.agenciapp.dao.AccountDailyRecordDaoImpl;
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
+import ar.com.buildingways.agenciapp.model.User;
 
 @Service("accountActivityService")
 public class AccountDailyRecordServiceImpl implements AccountDailyRecordService {
@@ -34,11 +35,12 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 		return accountDailyRecords;
 	}
 	
+	/** Recupera el desglose de movimientos de cuenta por juego y evento para un agenciero en el día de la fecha.
+	 *	Consulta la tabla AccountDailyRecords.
+	 */
 	@Override
-	public Collection<AccountDailyRecord> getItemizedAccountDailyRecord() {
-		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
-		// Implementación pendiente.
-		return accountDailyRecords;
+	public Collection<AccountDailyRecord> getItemizedAccountDailyRecords(User user) {
+		return accountDailyRecordDaoImpl.getItemizedAccountDailyRecords(user);
 	}
 
 }

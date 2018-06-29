@@ -20,8 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
+import ar.com.buildingways.agenciapp.model.User;
 import ar.com.buildingways.agenciapp.repository.AccountDailyRecordRepository;
 import ar.com.buildingways.agenciapp.repository.AccountRepository;
+import ar.com.buildingways.agenciapp.repository.UserRepository;
 import ar.com.buildingways.agenciapp.util.SQLQueries;
 
 public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
@@ -32,9 +34,12 @@ public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
 	@Autowired 
 	private AccountDailyRecordRepository accountDailyRecordRepository;
 	
+	@Autowired 
+	private UserRepository userRepository;
+	
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AccountDailyRecordDaoImpl.class);
 
 	@Override
@@ -73,5 +78,14 @@ public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
 		Query query = entityManager.createNativeQuery(SQLQueries.DELETE_ACCOUNT_DAILY_RECORDS);
 		int recordsDeleted = query.executeUpdate();
 		logger.info("Se eliminaron " + recordsDeleted + " registros de la tabla ACCOUNT_DAILY_RECORDS.");
+	}
+	
+	@Override
+	public Collection<AccountDailyRecord> getItemizedAccountDailyRecords(User user) {
+		Query query = entityManager.createNativeQuery(SQLQueries.SELECT_ITEMIZED_ACCOUNT_DAILY_RECORDS);
+		query.setParameter(1, userRepository.findByUsername(user.getUsername()).getId());
+		@SuppressWarnings("unchecked")
+		Collection<AccountDailyRecord>accountDailyRecords = query.getResultList();
+		return accountDailyRecords;
 	}
 }

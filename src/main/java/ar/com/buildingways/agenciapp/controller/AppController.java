@@ -55,20 +55,23 @@ public class AppController {
 		accountDailyRecordService.updateAccountDailyRecords();
 	}
 
-	/** Consulta el resultado de los movimientos de cuenta para un agenciero en el día de la fecha.
+	/** Recupera el resultado de los movimientos de cuenta para un agenciero en el día de la fecha.
 	 *	Consulta la tabla AccountDailyRecords.
 	 */
 	@GetMapping(value="/getGlobalAccountDailyRecord")
-	public Collection<AccountDailyRecord> getAccountDailyRecord() { 
+	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord() { 
 		return accountDailyRecordService.getGlobalAccountDailyRecord();
 	}
 	
-	/** Consulta el desglose de movimientos de cuenta por juego y evento para un agenciero en el día de la fecha.
+	/** Recupera el desglose de movimientos de cuenta por juego y evento para un agenciero en el día de la fecha.
 	 *	Consulta la tabla AccountDailyRecords.
 	 */
-	@GetMapping(value="/getItemizedAccountDailyRecord/{username}/{currentDate}")
-	public Collection<AccountDailyRecord> getAccountDailyRecordByGame() {
-		return accountDailyRecordService.getItemizedAccountDailyRecord();
+	@GetMapping(value="/getItemizedAccountDailyRecords")
+	public Collection<AccountDailyRecord> getItemizedAccountDailyRecords() {
+		User user = new User();
+		// Cuando se implemente el front se recuperará del usuario actualmente logueado.
+		user.setUsername(723204);
+		return accountDailyRecordService.getItemizedAccountDailyRecords(user);
 	}
 
 }
