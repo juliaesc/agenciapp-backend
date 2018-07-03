@@ -1,6 +1,5 @@
 package ar.com.buildingways.agenciapp.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +27,20 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 		accountDailyRecordDaoImpl.insertAccountDailyRecords(accountDailyRecordsFromDB);	
 	}
 	
-	@Override
-	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord() {
-		Collection<AccountDailyRecord> accountDailyRecords = new ArrayList<AccountDailyRecord>();
-		// Implementación pendiente.
-		return accountDailyRecords;
-	}
-	
-	/** Recupera el desglose de movimientos de cuenta por juego y evento para un agenciero en el día de la fecha.
+	/** Recupera los movimientos de cuenta del agenciero logueado desglosado por juego y evento 
+	 *	y la fecha de vencimiento para su pago.
 	 *	Consulta la tabla AccountDailyRecords.
 	 */
 	@Override
-	public Collection<AccountDailyRecord> getItemizedAccountDailyRecords(User user) {
-		return accountDailyRecordDaoImpl.getItemizedAccountDailyRecords(user);
+	public Collection<AccountDailyRecord> getAccountDailyRecords(User user) {
+		return accountDailyRecordDaoImpl.getAccountDailyRecords(user);
+	}
+	
+	/** Recupera el cálculo del monto a liquidarse de la cuenta del agenciero.
+	 *	Consulta la tabla AccountDailyRecords.
+	 */
+	public double getAccountDailySettlement(User user) {
+		return accountDailyRecordDaoImpl.calculateAccountDailySettlement(user);
 	}
 
 }

@@ -47,31 +47,38 @@ public class AppController {
 		userService.updateUsers();
 	}
 	
-	/** Actualiza diariamente los movimientos de cuenta de los usuarios habilitados para usar la aplicación
-	 *	que se encuentran en la tabla AccountDailyRecords.
+	/** Actualiza diariamente los movimientos de cuenta de los agencieros.
+	 *	Actualiza la tabla AccountDailyRecords.
 	 */
 	@GetMapping(value="/updateAccountDailyRecords")
 	public void updateAccountDailyRecords() {
 		accountDailyRecordService.updateAccountDailyRecords();
 	}
 
-	/** Recupera el resultado de los movimientos de cuenta para un agenciero en el día de la fecha.
-	 *	Consulta la tabla AccountDailyRecords.
+	/** Recupera los movimientos de cuenta desglosados por juego y evento del agenciero logueado 
+	 *  y la fecha de vencimiento para su pago.
+	 *  Consulta la tabla AccountDailyRecords.
 	 */
-	@GetMapping(value="/getGlobalAccountDailyRecord")
-	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord() { 
-		return accountDailyRecordService.getGlobalAccountDailyRecord();
+	@GetMapping(value="/getAccountDailyRecords")
+	public Collection<AccountDailyRecord> getAccountDailyRecords() {
+		// Cuando se implemente lo de seguridad desde el front, se enviará como parámetro
+		// el usuario que está logueado.
+		User user = new User();
+		user.setId(1);
+		return accountDailyRecordService.getAccountDailyRecords(user);
 	}
 	
-	/** Recupera el desglose de movimientos de cuenta por juego y evento para un agenciero en el día de la fecha.
-	 *	Consulta la tabla AccountDailyRecords.
+	/** Recupera el monto diario a liquidarse de la cuenta del agenciero 
+	 *  y la fecha de vencimiento para su pago.
+	 *  Consulta la tabla AccountDailyRecords.
 	 */
-	@GetMapping(value="/getItemizedAccountDailyRecords")
-	public Collection<AccountDailyRecord> getItemizedAccountDailyRecords() {
+	@GetMapping(value="/getAccountDailySettlement")
+	public double getAccountDailySettlement() {
+		// Cuando se implemente lo de seguridad desde el front, se enviará como parámetro
+		// el usuario que está logueado.
 		User user = new User();
-		// Cuando se implemente el front se recuperará del usuario actualmente logueado.
-		user.setUsername(723204);
-		return accountDailyRecordService.getItemizedAccountDailyRecords(user);
+		user.setId(1);
+		return accountDailyRecordService.getAccountDailySettlement(user);
 	}
 
 }

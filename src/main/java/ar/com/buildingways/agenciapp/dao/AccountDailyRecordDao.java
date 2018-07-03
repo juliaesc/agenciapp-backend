@@ -13,6 +13,8 @@ public interface AccountDailyRecordDao {
 	
 	void deletePastAccountDailyRecords();
 	
-	Collection<AccountDailyRecord> getItemizedAccountDailyRecords(User user);
+	Collection<AccountDailyRecord> getAccountDailyRecords(User user);
+	
+	double calculateAccountDailySettlement(User user);
 
 }

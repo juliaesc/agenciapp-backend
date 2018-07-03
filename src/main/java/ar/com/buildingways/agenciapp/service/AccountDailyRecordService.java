@@ -9,8 +9,8 @@ public interface AccountDailyRecordService {
 		
 	public void updateAccountDailyRecords();
 	
-	public Collection<AccountDailyRecord> getGlobalAccountDailyRecord();
+	public Collection<AccountDailyRecord> getAccountDailyRecords(User user);
 	
-	public Collection<AccountDailyRecord> getItemizedAccountDailyRecords(User user);
+	public double getAccountDailySettlement(User user);
 
 }

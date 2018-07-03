@@ -4,7 +4,7 @@ GO
 AS
 select cast(ag.n_legajo as numeric(8)) as legajo,
 	   RTRIM(t_apyn) as titular_agencia,
-	   isnull(RTRIM(t_calle),'') + ' NÂº ' + isnull(RTRIM(t_numero),'') + ' Localidad: ' + isnull(RTRIM(a.t_localidad),'') + ' C.P.: ' + isnull(RTRIM(a.c_codigopostal),'') as direccion, 
+	   isnull(RTRIM(t_calle),'') + ' Nº ' + isnull(RTRIM(t_numero),'') + ' Localidad: ' + isnull(RTRIM(a.t_localidad),'') + ' C.P.: ' + isnull(RTRIM(a.c_codigopostal),'') as direccion, 
 	   cast(c_comisionista as numeric(3)) as comisionista, 
 	   cast(n_cantterminales as numeric(3)) as cant_terminales,
 	   cast(n_cuit as numeric(15)) as cuit, 
