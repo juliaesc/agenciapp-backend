@@ -48,29 +48,6 @@ public class Account {
 	
 	public Account() {}
 	
-	public Account(int userId, User user, int accountNumber, Set<AccountDailyRecord> accountDailyRecords,
-			int branchNumber, String holder, char directDebit, String accountType, double grossIncomePercentage,
-			String cbu, String createdBy, DateTime createdDate, String lastModifiedBy, DateTime lastModifiedDate,
-			boolean enabled, boolean deleted) {
-		super();
-		this.userId = userId;
-		this.user = user;
-		this.accountNumber = accountNumber;
-		this.accountDailyRecords = accountDailyRecords;
-		this.branchNumber = branchNumber;
-		this.holder = holder;
-		this.directDebit = directDebit;
-		this.accountType = accountType;
-		this.grossIncomePercentage = grossIncomePercentage;
-		this.cbu = cbu;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
-		this.enabled = enabled;
-		this.deleted = deleted;
-	}
-
 	public Account(int accountNumber, int branchNumber, String holder, char directDebit, String accountType, double grossIncomePercentage,
 			String cbu, String createdBy, DateTime createdDate, String lastModifiedBy,
 			DateTime lastModifiedDate, boolean enabled, boolean deleted) {

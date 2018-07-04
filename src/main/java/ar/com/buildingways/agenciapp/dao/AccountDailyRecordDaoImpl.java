@@ -62,7 +62,7 @@ public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
 			AccountDailyRecord ac = new AccountDailyRecord(accountRepository.findByAccountNumber((Integer) item[1]),
 					(String) item[2],(Integer) item[3],new DateTime((Timestamp) item[4]),((BigDecimal) item[5]).doubleValue(),
 					((BigDecimal) item[6]).doubleValue(),((BigDecimal) item[7]).doubleValue(),
-					(String) item[8],(String) item[9],(String) item[10]);
+					(String) item[8],(String) item[9],(String) item[10], new DateTime());
 			accountDailyRecords.add(ac);
 		}
 		accountDailyRecordRepository.saveAll(accountDailyRecords);		

@@ -2,7 +2,6 @@ package ar.com.buildingways.agenciapp.model;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,11 +35,13 @@ public class AccountDailyRecord {
 	private String game;
 	private int drawNumber;
 	private String type;
+	private DateTime updatedDate;
 	
 	public AccountDailyRecord() {}
 
 	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
-			double debt, double credit, double interest, String state, String currency, String type) {
+			double debt, double credit, double interest, String state, String currency, String type,
+			DateTime updatedDate) {
 		this.account = account;
 		this.game = game;
 		this.drawNumber = drawNumber;
@@ -51,6 +52,7 @@ public class AccountDailyRecord {
 		this.state = state;
 		this.currency = currency;
 		this.type = type;
+		this.updatedDate = updatedDate;
 	}
 	
 	@Id
@@ -63,7 +65,7 @@ public class AccountDailyRecord {
 		this.id = id;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL) 
+	@ManyToOne 
 	@JoinColumn(name = "account_id", nullable = false, columnDefinition = "numeric(8)")
 	public Account getAccount() {
 		return account;
@@ -144,6 +146,14 @@ public class AccountDailyRecord {
 		this.type = type;
 	}
 	
+	@Column(name = "updated_date", columnDefinition = "datetime")
+	public DateTime getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(DateTime updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -171,7 +181,8 @@ public class AccountDailyRecord {
 	    result.append("Créditos: " + this.getCredit() + " | ");
 	    result.append("Intereses: " + this.getInterest() + " | ");
 	    result.append("Fecha de vencimiento: " + this.getDueDate().toString("dd/MM/yyyy") + " | ");
-	    result.append("Estado: " + this.getState());
+	    result.append("Estado: " + this.getState() + " | ");
+	    result.append("Fecha de actualización: "+ this.getUpdatedDate().toString("dd/MM/yyyy HH:mm:ss"));
 
 	    return result.toString();
 	}
