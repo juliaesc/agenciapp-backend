@@ -39,15 +39,15 @@ public class AppController {
 		return new ResponseEntity<User>(res, HttpStatus.OK);
 	}
 	
-	/** Actualiza diariamente los datos de los usuarios habilitados para usar la aplicación
-	 *	que se encuentran en las tablas Users, UserDetails y Accounts.
+	/** Recupera diariamente los datos de los usuarios habilitados para usar la aplicación.
+	 *	Actualiza las tablas Users, UserDetails y Accounts.
 	 */
 	@GetMapping(value="/updateUsers")
 	public void updateUsers() {
 		userService.updateUsers();
 	}
 	
-	/** Actualiza diariamente los movimientos de cuenta de los agencieros.
+	/** Recupera diariamente los movimientos de cuenta de los agencieros.
 	 *	Actualiza la tabla AccountDailyRecords.
 	 */
 	@GetMapping(value="/updateAccountDailyRecords")
@@ -68,8 +68,7 @@ public class AppController {
 		return accountDailyRecordService.getAccountDailyRecords(user);
 	}
 	
-	/** Recupera el monto diario a liquidarse de la cuenta del agenciero 
-	 *  y la fecha de vencimiento para su pago.
+	/** Recupera el monto diario a liquidarse de la cuenta del agenciero.
 	 *  Consulta la tabla AccountDailyRecords.
 	 */
 	@GetMapping(value="/getAccountDailySettlement")

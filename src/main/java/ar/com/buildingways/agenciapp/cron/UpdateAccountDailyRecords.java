@@ -18,17 +18,15 @@ public class UpdateAccountDailyRecords {
 	AccountDailyRecordService accountDailyRecordService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateUsers.class);
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
 	/** Actualiza diariamente los movimientos de cuenta de los agencieros.
 	 *	Actualiza la tabla AccountDailyRecords.
-	 * Ejecución: de lunes a sábado a las 01:00:00 a.m.
-	 * Para pruebas: cada 5 minutos.
+	 * Ejecución: de lunes a sábado a las 01:30:00 a.m.
 	 */
-	//@Scheduled(cron = "0 0 01 * * MON-FRI")
-	//@Scheduled(cron = "0 */3 * * * *")
+	//@Scheduled(cron = "${scheduling.dailyrecords.cron}")
 	public void updateAccountDailyRecords() {
-	    logger.info("Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+	    logger.info("Cron Task | Fecha y hora de ejecución: {}", dateTimeFormatter.format(LocalDateTime.now()));
 	    accountDailyRecordService.updateAccountDailyRecords();	    
 	}
 }

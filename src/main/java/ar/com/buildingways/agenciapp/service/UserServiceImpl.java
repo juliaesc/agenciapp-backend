@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService{
 	@Qualifier("userDaoImpl")
 	private UserDao userDaoImpl;
 	
-	/** Actualiza diariamente la BD de usuarios recuperando las agencias activas y sus datos
-	 * por medio de una vista que apunta a varias BD de Lotería.
+	/** Recupera diariamente los datos de los usuarios habilitados para usar la aplicación.
+	 *	Actualiza las tablas Users, UserDetails y Accounts.
 	 */
 	@Override
 	public void updateUsers() {

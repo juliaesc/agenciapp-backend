@@ -17,8 +17,8 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 	@Qualifier("accountDailyRecordDaoImpl")
 	private AccountDailyRecordDaoImpl accountDailyRecordDaoImpl;
 	
-	/** Actualiza diariamente la BD de registros de movimientos de cuenta corriente
-	 * recuperando los movimientos por medio de un SP que apunta a la BD CCorrientes.
+	/** Recupera diariamente los movimientos de cuenta de los agencieros.
+	 *	Actualiza la tabla AccountDailyRecords.
 	 */
 	@Override
 	public void updateAccountDailyRecords() {
@@ -27,17 +27,17 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 		accountDailyRecordDaoImpl.insertAccountDailyRecords(accountDailyRecordsFromDB);	
 	}
 	
-	/** Recupera los movimientos de cuenta del agenciero logueado desglosado por juego y evento 
-	 *	y la fecha de vencimiento para su pago.
-	 *	Consulta la tabla AccountDailyRecords.
+	/** Recupera los movimientos de cuenta desglosados por juego y evento del agenciero logueado 
+	 *  y la fecha de vencimiento para su pago.
+	 *  Consulta la tabla AccountDailyRecords.
 	 */
 	@Override
 	public Collection<AccountDailyRecord> getAccountDailyRecords(User user) {
 		return accountDailyRecordDaoImpl.getAccountDailyRecords(user);
 	}
 	
-	/** Recupera el cálculo del monto a liquidarse de la cuenta del agenciero.
-	 *	Consulta la tabla AccountDailyRecords.
+	/** Recupera el monto diario a liquidarse de la cuenta del agenciero.
+	 *  Consulta la tabla AccountDailyRecords.
 	 */
 	public double getAccountDailySettlement(User user) {
 		return accountDailyRecordDaoImpl.calculateAccountDailySettlement(user);

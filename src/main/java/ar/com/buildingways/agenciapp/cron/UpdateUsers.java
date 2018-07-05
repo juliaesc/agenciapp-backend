@@ -18,17 +18,15 @@ public class UpdateUsers {
 	UserService userService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateUsers.class);
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
 	/** Actualiza diariamente los datos de los usuarios habilitados para usar la aplicación
 	 *	que se encuentran en las tablas Users, UserDetails y Accounts.
 	 * Ejecución: de lunes a sábado a las 01:00:00 a.m.
-	 * Para pruebas: cada 5 minutos.
 	 */
-	//@Scheduled(cron = "0 0 01 * * MON-FRI")
-	//@Scheduled(cron = "0 */2 * * * *")
+	//@Scheduled(cron = "${scheduling.users.cron}")
 	public void updateUsers() {
-	    logger.info("Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+	    logger.info("Cron Task | Fecha y hora de ejecución: {}", dateTimeFormatter.format(LocalDateTime.now()));
 	    userService.updateUsers();	    
 	}
 
