@@ -17,7 +17,7 @@ import ar.com.buildingways.agenciapp.service.AccountDailyRecordService;
 import ar.com.buildingways.agenciapp.service.UserService;
 
 @RestController
-@RequestMapping("/agenciapp")
+@RequestMapping("/")
 public class AppController {
 	
 	@Autowired

@@ -5,9 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @EnableScheduling
@@ -23,13 +20,5 @@ public class AgenciAppBackendApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(AgenciAppBackendApplication.class, args);
 	}
-	
-	@RestController
-	class GreetingController {
 
-	    @RequestMapping("/hello/{name}")
-	    String hello(@PathVariable String name) {
-	        return "Hello, " + name + "!";
-	    }
-	} 
 }
