@@ -20,8 +20,8 @@ public class UpdateUsers {
 	private static final Logger logger = LoggerFactory.getLogger(UpdateUsers.class);
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
-	/** Actualiza diariamente los datos de los usuarios habilitados para usar la aplicación
-	 *	que se encuentran en las tablas Users, UserDetails y Accounts.
+	/** Recupera diariamente los datos de los usuarios habilitados para usar la aplicación.
+	 *	Actualiza las tablas Users, UserDetails y Accounts.
 	 * Ejecución: de lunes a sábado a las 01:00:00 a.m.
 	 */
 	//@Scheduled(cron = "${scheduling.users.cron}")

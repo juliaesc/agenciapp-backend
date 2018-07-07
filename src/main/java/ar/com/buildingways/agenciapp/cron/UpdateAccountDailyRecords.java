@@ -20,7 +20,7 @@ public class UpdateAccountDailyRecords {
 	private static final Logger logger = LoggerFactory.getLogger(UpdateUsers.class);
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-	/** Actualiza diariamente los movimientos de cuenta de los agencieros.
+	/** Recupera diariamente los movimientos de cuenta de los agencieros.
 	 *	Actualiza la tabla AccountDailyRecords.
 	 * Ejecución: de lunes a sábado a las 01:30:00 a.m.
 	 */
