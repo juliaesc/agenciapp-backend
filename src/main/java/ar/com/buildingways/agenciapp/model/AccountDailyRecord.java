@@ -1,21 +1,30 @@
 package ar.com.buildingways.agenciapp.model;
 
-import javax.persistence.CascadeType;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "ACCOUNT_DAILY_RECORDS")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+  				  property = "id")
 public class AccountDailyRecord {
  
 	private Long id;
+	@JsonManagedReference
 	private Account account;
 	private String currency;
 	private double debt;
@@ -25,33 +34,30 @@ public class AccountDailyRecord {
 	private String state;
 	private String game;
 	private int drawNumber;
+	private String type;
+	private DateTime updatedDate;
 	
-	public AccountDailyRecord(String currency, double debt, double credit, 
-			double interest, DateTime dueDate, String state) {
-		super();
-		this.currency = currency;
+	public AccountDailyRecord() {}
+
+	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
+			double debt, double credit, double interest, String state, String currency, String type,
+			DateTime updatedDate) {
+		this.account = account;
+		this.game = game;
+		this.drawNumber = drawNumber;
+		this.dueDate = dueDate;
 		this.debt = debt;
 		this.credit = credit;
 		this.interest = interest;
-		this.dueDate = dueDate;
 		this.state = state;
-	}
-	
-	public AccountDailyRecord(String currency, double debt, String game, int drawNumber,
-			double interest, DateTime dueDate, String state) {
-		super();
 		this.currency = currency;
-		this.debt = debt;
-		this.game = game;
-		this.drawNumber = drawNumber;
-		this.interest = interest;
-		this.dueDate = dueDate;
-		this.state = state;
+		this.type = type;
+		this.updatedDate = updatedDate;
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false, columnDefinition = "numeric(10)")
 	public Long getId() {
 		return id;
 	}
@@ -59,7 +65,8 @@ public class AccountDailyRecord {
 		this.id = id;
 	}
 	
-	@ManyToOne(cascade=CascadeType.ALL)  
+	@ManyToOne 
+	@JoinColumn(name = "account_id", nullable = false, columnDefinition = "numeric(8)")
 	public Account getAccount() {
 		return account;
 	}
@@ -67,7 +74,7 @@ public class AccountDailyRecord {
 		this.account = account;
 	}
 	
-	@Column(name = "currency")
+	@Column(name = "currency", columnDefinition = "varchar(10)")
 	public String getCurrency() {
 		return currency;
 	}
@@ -75,7 +82,7 @@ public class AccountDailyRecord {
 		this.currency = currency;
 	}
 	
-	@Column(name = "debt")
+	@Column(name = "debt", nullable = true, columnDefinition = "decimal(8,2)")
 	public double getDebt() {
 		return debt;
 	}
@@ -83,7 +90,7 @@ public class AccountDailyRecord {
 		this.debt = debt;
 	}
 	
-	@Column(name = "credit")
+	@Column(name = "credit", nullable = true, columnDefinition = "decimal(8,2)")
 	public double getCredit() {
 		return credit;
 	}
@@ -91,7 +98,7 @@ public class AccountDailyRecord {
 		this.credit = credit;
 	}
 	
-	@Column(name = "interest")
+	@Column(name = "interest", nullable = true, columnDefinition = "decimal(8,2)")
 	public double getInterest() {
 		return interest;
 	}
@@ -99,7 +106,7 @@ public class AccountDailyRecord {
 		this.interest = interest;
 	}
 	
-	@Column(name = "due_date")
+	@Column(name = "due_date", nullable = true, columnDefinition = "datetime")
 	public DateTime getDueDate() {
 		return dueDate;
 	}
@@ -107,7 +114,7 @@ public class AccountDailyRecord {
 		this.dueDate = dueDate;
 	}
 	
-	@Column(name = "state")
+	@Column(name = "state", columnDefinition = "varchar(30)")
 	public String getState() {
 		return state;
 	}
@@ -115,7 +122,7 @@ public class AccountDailyRecord {
 		this.state = state;
 	}
 	
-	@Column(name = "game")
+	@Column(name = "game", columnDefinition = "varchar(20)")
 	public String getGame() {
 		return game;
 	}
@@ -123,12 +130,61 @@ public class AccountDailyRecord {
 		this.game = game;
 	}
 	
-	@Column(name = "draw_number")
+	@Column(name = "draw_number", columnDefinition = "numeric(6)")
 	public int getDrawNumber() {
 		return drawNumber;
 	}
 	public void setDrawNumber(int drawNumber) {
 		this.drawNumber = drawNumber;
+	}
+	
+	@Column(name = "type", columnDefinition = "varchar(30)")
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	@Column(name = "updated_date", columnDefinition = "datetime")
+	public DateTime getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(DateTime updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountDailyRecord)) return false;
+        AccountDailyRecord accountDailyRecord = (AccountDailyRecord) o;
+        return Objects.equals(getAccount().getUserId(), accountDailyRecord.getAccount().getUserId());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAccount().getUserId());
+    }
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+	    String NEW_LINE = System.getProperty("line.separator");
+
+	    result.append("--- REGISTROS DIARIOS DE ESTADO DE CUENTA --- " + NEW_LINE);
+	    result.append("Tipo: " + this.getType() + " | ");
+	    result.append("Juego: " + this.getGame() + " | ");
+	    result.append("Nº sorteo: " + this.getDrawNumber() + " | ");
+	    result.append("Moneda: " + this.getCurrency() + " | ");
+	    result.append("Débitos: " + this.getDebt() + " | ");
+	    result.append("Créditos: " + this.getCredit() + " | ");
+	    result.append("Intereses: " + this.getInterest() + " | ");
+	    result.append("Fecha de vencimiento: " + this.getDueDate().toString("dd/MM/yyyy") + " | ");
+	    result.append("Estado: " + this.getState() + " | ");
+	    result.append("Fecha de actualización: "+ this.getUpdatedDate().toString("dd/MM/yyyy HH:mm:ss"));
+
+	    return result.toString();
 	}
 	
 }

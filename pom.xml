@@ -5,7 +5,7 @@
 	<groupId>ar.com.buildingways</groupId>
 	<artifactId>agenciapp-backend</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>agenciapp-backend</name>
 	<description>AgenciApp Backend</description>
 	
@@ -16,6 +16,7 @@
 	</parent>
 	
 	<properties>
+		<start-class>ar.com.buildingways.agenciapp.controller.AppController</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
@@ -23,11 +24,14 @@
 	<dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+			<!-- We exclude the embedded Tomcat -->
+            <exclusions>
+        		<exclusion>
+          			<groupId>org.springframework.boot</groupId>
+          			<artifactId>spring-boot-starter-tomcat</artifactId>
+        		</exclusion>
+      		</exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -70,14 +74,34 @@
             <version>1.1-groovy-2.4-rc-3</version>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.core</artifactId>
+			<version>7.0.0.CR1</version>
+		</dependency>
+		<dependency>
+	  	  <groupId>com.fasterxml.jackson.jaxrs</groupId>
+	  	  <artifactId>jackson-jaxrs-json-provider</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.jackson.datatype</groupId>
+		  <artifactId>jackson-datatype-joda</artifactId>
+		</dependency>
+		<!-- We include the javax.servlet API specs, the implementation will be provided by Wildfly/JBoss-->
+    	<dependency>
+      		<groupId>javax.servlet</groupId>
+      		<artifactId>javax.servlet-api</artifactId>
+      		<scope>provided</scope>
+    	</dependency>
     </dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+<!-- We remove this plugin to reduce the WAR file size. It's not needed to deploy in an external application server. -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.springframework.boot</groupId> -->
+<!-- 				<artifactId>spring-boot-maven-plugin</artifactId> -->
+<!-- 			</plugin> -->
 			
 <!-- 			<plugin> -->
 <!-- 				<groupId>com.github.eirslett</groupId> -->
