@@ -39,6 +39,7 @@ public class AccountDailyRecordServiceImpl implements AccountDailyRecordService 
 	/** Recupera el monto diario a liquidarse de la cuenta del agenciero.
 	 *  Consulta la tabla AccountDailyRecords.
 	 */
+	@Override
 	public double getAccountDailySettlement(User user) {
 		return accountDailyRecordDaoImpl.calculateAccountDailySettlement(user);
 	}

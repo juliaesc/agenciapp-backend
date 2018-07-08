@@ -79,10 +79,7 @@ public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
 	
 	@Override
 	public Collection<AccountDailyRecord> getAccountDailyRecords(User user) {
-		Query query = entityManager.createNativeQuery(SQLQueries.SELECT_ACCOUNT_DAILY_RECORDS);
-		query.setParameter(1, user.getId());
-		@SuppressWarnings("unchecked")
-		Collection<AccountDailyRecord>accountDailyRecords = query.getResultList();
+		Collection<AccountDailyRecord>accountDailyRecords = accountDailyRecordRepository.findByAccount(user.getAccount());
 		return accountDailyRecords;
 	}
 
