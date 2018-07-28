@@ -76,18 +76,11 @@ public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
 		logger.info("Se eliminaron " + recordsDeleted + " registros de la tabla ACCOUNT_DAILY_RECORDS.");
 	}
 	
-	
-	@Override
-	public Collection<AccountDailyRecord> getAccountDailyRecords(User user) {
-		Collection<AccountDailyRecord>accountDailyRecords = accountDailyRecordRepository.findByAccount(user.getAccount());
-		return accountDailyRecords;
-	}
-
 	@Override
 	public double calculateAccountDailySettlement(User user) {
 		Query query = entityManager.createNativeQuery(SQLQueries.SELECT_ACCOUNT_SETTLEMENT);
 		query.setParameter(1, user.getId());
-		double totalDailySettlement = ((BigDecimal) query.getSingleResult()).doubleValue();
-		return totalDailySettlement;
+		double dailySettlement = ((BigDecimal) query.getSingleResult()).doubleValue();
+		return dailySettlement;
 	}
 }

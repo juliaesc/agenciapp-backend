@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
 import ar.com.buildingways.agenciapp.model.User;
+import ar.com.buildingways.agenciapp.repository.UserRepository;
 import ar.com.buildingways.agenciapp.service.AccountDailyRecordService;
 import ar.com.buildingways.agenciapp.service.UserService;
 
@@ -25,6 +26,9 @@ public class AppController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	/** Login de la aplicación.
 	 */
@@ -63,9 +67,8 @@ public class AppController {
 	public Collection<AccountDailyRecord> getAccountDailyRecords() {
 		// Cuando se implemente lo de seguridad desde el front, se enviará como parámetro
 		// el usuario que está logueado.
-		User user = new User();
-		user.setId(1);
-		return accountDailyRecordService.getAccountDailyRecords(user);
+		User user = userRepository.findByUsername(723204);
+		return user.getAccount().getAccountDailyRecords();
 	}
 	
 	/** Recupera el monto diario a liquidarse de la cuenta del agenciero.
@@ -75,8 +78,7 @@ public class AppController {
 	public double getAccountDailySettlement() {
 		// Cuando se implemente lo de seguridad desde el front, se enviará como parámetro
 		// el usuario que está logueado.
-		User user = new User();
-		user.setId(1);
+		User user = userRepository.findByUsername(723204);
 		return accountDailyRecordService.getAccountDailySettlement(user);
 	}
 
