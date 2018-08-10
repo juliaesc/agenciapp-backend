@@ -1,8 +1,8 @@
 package ar.com.buildingways.agenciapp.dao;
 
-import java.util.Collection;
-
 import ar.com.buildingways.agenciapp.model.User;
+
+import java.util.Collection;
 
 public interface AccountDailyRecordDao {
 	

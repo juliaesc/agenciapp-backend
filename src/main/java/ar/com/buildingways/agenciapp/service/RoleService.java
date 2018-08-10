@@ -1,8 +1,8 @@
 package ar.com.buildingways.agenciapp.service;
 
-import java.util.Collection;
-
 import ar.com.buildingways.agenciapp.model.Role;
+
+import java.util.Collection;
 
 public interface RoleService {
 	

@@ -1,13 +1,12 @@
 package ar.com.buildingways.agenciapp.service;
 
-import java.util.Collection;
-
+import ar.com.buildingways.agenciapp.dao.AccountDailyRecordDaoImpl;
+import ar.com.buildingways.agenciapp.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import ar.com.buildingways.agenciapp.dao.AccountDailyRecordDaoImpl;
-import ar.com.buildingways.agenciapp.model.User;
+import java.util.Collection;
 
 @Service("accountActivityService")
 public class AccountDailyRecordServiceImpl implements AccountDailyRecordService {

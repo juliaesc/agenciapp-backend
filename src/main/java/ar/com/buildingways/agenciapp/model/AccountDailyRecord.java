@@ -1,21 +1,12 @@
 package ar.com.buildingways.agenciapp.model;
 
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.joda.time.DateTime;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.joda.time.DateTime;
+
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ACCOUNT_DAILY_RECORDS")
@@ -40,8 +31,8 @@ public class AccountDailyRecord {
 	public AccountDailyRecord() {}
 
 	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
-			double debt, double credit, double interest, String state, String currency, String type,
-			DateTime updatedDate) {
+                              double debt, double credit, double interest, String state, String currency, String type,
+                              DateTime updatedDate) {
 		this.account = account;
 		this.game = game;
 		this.drawNumber = drawNumber;

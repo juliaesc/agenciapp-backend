@@ -1,34 +1,25 @@
 package ar.com.buildingways.agenciapp.model;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-
+import ar.com.buildingways.agenciapp.model.audit.BaseAudit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.joda.time.DateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "ACCOUNTS")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  		  property = "userId")
-public class Account {
+public class Account extends BaseAudit {
 	
-	private int userId;
+	private Long userId;
 	private User user;
 	private int accountNumber;
 	@JsonBackReference
@@ -39,13 +30,7 @@ public class Account {
 	private String accountType;
 	private double grossIncomePercentage;
 	private String cbu;
-	private String createdBy;
-	private DateTime createdDate;
-	private String lastModifiedBy;
-	private DateTime lastModifiedDate;
-	private boolean enabled;
-	private boolean deleted;
-	
+
 	public Account() {}
 	
 	public Account(int accountNumber, int branchNumber, String holder, char directDebit, String accountType, double grossIncomePercentage,
@@ -68,12 +53,12 @@ public class Account {
 
 	@Id  
     @GeneratedValue(generator="myGenerator")  
-    @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property")) 
+    @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property"))
 	@Column (name = "user_id", unique = true, nullable = false, columnDefinition = "numeric(8)")
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	
@@ -148,54 +133,6 @@ public class Account {
 	}
 	public void setCbu(String cbu) {
 		this.cbu = cbu;
-	}
-
-	@Column(name = "created_by", columnDefinition = "varchar(20)")
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	
-	@Column(name = "created_date", columnDefinition = "datetime")
-	public DateTime getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(DateTime createdDate) {
-		this.createdDate = createdDate;
-	}
-	
-	@Column(name = "last_modified_by", nullable = true, columnDefinition = "varchar(20)")
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
-	}
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-	
-	@Column(name = "last_modified_date", nullable = true, columnDefinition = "datetime")
-	public DateTime getLastModifiedDate() {
-		return lastModifiedDate;
-	}
-	public void setLastModifiedDate(DateTime lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
-	
-	@Column(name = "enabled", columnDefinition = "tinyint")
-	public boolean isEnabled() {
-		return enabled;
-	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	
-	@Column(name = "deleted", nullable = true, columnDefinition = "tinyint")
-	public boolean isDeleted() {
-		return deleted;
-	}
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 
 	@Override

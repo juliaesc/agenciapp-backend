@@ -1,21 +1,13 @@
 package ar.com.buildingways.agenciapp.model;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "ROLES")
@@ -23,7 +15,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		  		  property = "id")
 public class Role {
 	
-	private int id;
+	private Long id;
 	private String name;
 	private String description;
 	@JsonBackReference
@@ -34,10 +26,10 @@ public class Role {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", unique = true, nullable = false, columnDefinition = "numeric(8)")
-	public int getId() {
+	public Long getId() {
 		return id;
 	}	
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -57,7 +49,7 @@ public class Role {
 		this.description = description;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+	@ManyToMany(mappedBy = "roles")
 	public Set<User> getUsers() {
 		return users;
 	}

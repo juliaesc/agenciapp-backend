@@ -1,14 +1,18 @@
 package ar.com.buildingways.agenciapp.repository;
 
+import ar.com.buildingways.agenciapp.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import ar.com.buildingways.agenciapp.dao.UserDao;
-import ar.com.buildingways.agenciapp.model.User;
+import java.util.Optional;
 
-@Repository("userRepository")
-public interface UserRepository extends CrudRepository<User, Integer>, UserDao {
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
 
-	User findByUsername(int username);
+	//User findByUsername(int username);
+	
+	Optional<User> findByUsername(Long username);
+
+	Boolean existsByUsername(String username);
 
 }

@@ -1,5 +1,17 @@
 package ar.com.buildingways.agenciapp.dao;
 
+import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
+import ar.com.buildingways.agenciapp.model.User;
+import ar.com.buildingways.agenciapp.repository.AccountDailyRecordRepository;
+import ar.com.buildingways.agenciapp.repository.AccountRepository;
+import ar.com.buildingways.agenciapp.util.SQLQueries;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -7,30 +19,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.StoredProcedureQuery;
-
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
-import ar.com.buildingways.agenciapp.model.AccountDailyRecord;
-import ar.com.buildingways.agenciapp.model.User;
-import ar.com.buildingways.agenciapp.repository.AccountDailyRecordRepository;
-import ar.com.buildingways.agenciapp.repository.AccountRepository;
-import ar.com.buildingways.agenciapp.util.SQLQueries;
-
 public class AccountDailyRecordDaoImpl implements AccountDailyRecordDao {
 
-	@Autowired 
+	@Autowired
 	private AccountRepository accountRepository;
 	
-	@Autowired 
+	@Autowired
 	private AccountDailyRecordRepository accountDailyRecordRepository;
 	
 	@PersistenceContext
