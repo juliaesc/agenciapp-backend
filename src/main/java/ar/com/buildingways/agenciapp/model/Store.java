@@ -12,9 +12,9 @@ import java.util.Objects;
 @Table(name = "STORES")
 public class Store extends BaseAudit {
 
-    private User owner;
+    private Long userId;
+    private User user;
     private String address;
-    private String email;
     private String tradeName;
     private Long cuit;
     private int commissionAgent;
@@ -23,11 +23,11 @@ public class Store extends BaseAudit {
     public Store() {
     }
 
-    public Store(String address, String email, User owner, String tradeName, long cuit, int commissionAgent,
+    public Store(String address, User user, String tradeName, long cuit, int commissionAgent,
                  int terminalQuantity, String createdBy, DateTime createdDate, String lastModifiedBy, DateTime lastModifiedDate,
                  boolean enabled, boolean deleted) {
         this.address = address;
-        this.email = email;
+        this.user = user;
         this.tradeName = tradeName;
         this.cuit = cuit;
         this.commissionAgent = commissionAgent;
@@ -42,7 +42,7 @@ public class Store extends BaseAudit {
 
     @Id
     @GeneratedValue(generator = "myGenerator")
-    @GenericGenerator(name = "myGenerator", strategy = "foreign", parameters = @Parameter(value = "owner", name = "property"))
+    @GenericGenerator(name = "myGenerator", strategy = "foreign", parameters = @Parameter(value = "user", name = "property"))
     @Column(name = "user_id", unique = true, nullable = false, columnDefinition = "numeric(8)")
     public Long getUserId() {
         return this.userId;
@@ -52,7 +52,7 @@ public class Store extends BaseAudit {
         this.userId = userId;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @PrimaryKeyJoinColumn
     public User getUser() {
         return user;
@@ -69,24 +69,6 @@ public class Store extends BaseAudit {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Column(name = "email", columnDefinition = "varchar(30)")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Column(name = "store_owner", columnDefinition = "varchar(50)")
-    public String getStoreOwner() {
-        return storeOwner;
-    }
-
-    public void setStoreOwner(String storeOwner) {
-        this.storeOwner = storeOwner;
     }
 
     @Column(name = "trade_name", nullable = true, columnDefinition = "varchar(80)")
@@ -145,8 +127,7 @@ public class Store extends BaseAudit {
 
         result.append("--- DETALLES ---" + NEW_LINE);
         result.append("Domicilio: " + this.getAddress() + NEW_LINE);
-        result.append("Email: " + this.getEmail() + NEW_LINE);
-        result.append("Razón social: " + this.getStoreOwner() + NEW_LINE);
+        result.append("Propietario: " + this.getUser().getFirstName() + " " + this.getUser().getLastName() + NEW_LINE);
         result.append("Nombre de fantasía: " + this.getTradeName() + NEW_LINE);
         result.append("CUIT: " + this.getCuit() + NEW_LINE);
         result.append("Comisionista: " + this.getCommissionAgent() + NEW_LINE);

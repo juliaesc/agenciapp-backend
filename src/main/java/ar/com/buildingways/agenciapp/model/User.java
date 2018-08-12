@@ -9,13 +9,16 @@ import org.joda.time.DateTime;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "USERS",
         uniqueConstraints = {@UniqueConstraint(columnNames = "id"),
-                @UniqueConstraint(columnNames = "username")})
+                             @UniqueConstraint(columnNames = "username")})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class User extends BaseAudit {
@@ -24,6 +27,11 @@ public class User extends BaseAudit {
     @NaturalId
     private Long username;
     private String password;
+    private String firstName;
+    private String lastName;
+    @Size(max = 40)
+    @Email
+    private String email;
     @JsonManagedReference
     private Set<Role> roles;
     private Store store;
@@ -66,6 +74,33 @@ public class User extends BaseAudit {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Column(name = "firstName", columnDefinition = "varchar(40)")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "lastName", columnDefinition = "varchar(40)")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Column(name = "email", columnDefinition = "varchar(40)")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -118,6 +153,8 @@ public class User extends BaseAudit {
 
         result.append("********** USUARIO **********" + NEW_LINE);
         result.append("Nombre de usuario (legajo): " + this.getUsername() + NEW_LINE);
+        result.append("Nombre Completo: " + this.getFirstName() + " " + this.getLastName() + NEW_LINE);
+        result.append("Email: " + this.getEmail() + NEW_LINE);
         result.append("Roles: " + this.getRoles().toString() + NEW_LINE);
         result.append("Creado por: " + this.getCreatedBy() + NEW_LINE);
         result.append("Fecha de creación: " + this.getCreatedDate().toString("dd/MM/yyyy HH:mm:ss") + NEW_LINE);

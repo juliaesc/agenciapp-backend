@@ -76,24 +76,30 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        /*if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
-        }*/
+        }
 
         // Creating user's account
-        User user = new User();
         Store store = new Store();
-        store.setEmail(signUpRequest.getEmail());
+        store.setCommissionAgent(2);
+        store.setAddress("66 n 2709");
+        store.setCuit(12345678911L);
+        store.setTerminalQuantity(2);
+        store.setTradeName("La Nueva Moneda");
         store.setCreatedBy("Sebito");
         store.setCreatedDate(DateTime.now());
+        User user = new User();
+        user.setEmail(signUpRequest.getEmail());
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setFirstName(signUpRequest.getFirstName());
+        user.setLastName(signUpRequest.getLastName());
         user.setCreatedBy("Sebito");
         user.setCreatedDate(DateTime.now());
         store.setUser(user);
         user.setStore(store);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByName(Constants.ROL_USUARIO)
                 .orElseThrow(() -> new AppException("User Role not set."));

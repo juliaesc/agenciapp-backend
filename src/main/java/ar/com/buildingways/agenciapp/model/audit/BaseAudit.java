@@ -13,10 +13,11 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
-        value = {"createdBy", "lastModifiedBy","createdDate", "lastModifiedDate"},
+        value = {"createdBy", "lastModifiedBy", "createdDate", "lastModifiedDate"},
         allowGetters = true
 )
 public abstract class BaseAudit implements Serializable {

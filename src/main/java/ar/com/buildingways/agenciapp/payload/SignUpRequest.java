@@ -1,16 +1,13 @@
 package ar.com.buildingways.agenciapp.payload;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class SignUpRequest {
 
-    @NotBlank
-    @Size(min = 3, max = 8)
+    @NotNull
+    @Max(value = 999999, message = "Username should be less than 1000000")
     private Long username;
 
-    @NotBlank
     @Size(max = 40)
     @Email
     private String email;
@@ -18,6 +15,12 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 6, max = 20)
     private String password;
+
+    @Size(max = 40)
+    private String firstName;
+
+    @Size(max = 40)
+    private String lastName;
 
     public Long getUsername() {
         return username;
@@ -43,4 +46,19 @@ public class SignUpRequest {
         this.password = password;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }
