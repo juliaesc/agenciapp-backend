@@ -2,8 +2,8 @@ package ar.com.buildingways.agenciapp.controller;
 
 import ar.com.buildingways.agenciapp.exception.AppException;
 import ar.com.buildingways.agenciapp.model.Role;
+import ar.com.buildingways.agenciapp.model.Store;
 import ar.com.buildingways.agenciapp.model.User;
-import ar.com.buildingways.agenciapp.model.UserDetails;
 import ar.com.buildingways.agenciapp.payload.ApiResponse;
 import ar.com.buildingways.agenciapp.payload.JwtAuthenticationResponse;
 import ar.com.buildingways.agenciapp.payload.LoginRequest;
@@ -83,16 +83,16 @@ public class AuthController {
 
         // Creating user's account
         User user = new User();
-        UserDetails userDetails = new UserDetails();
-        userDetails.setEmail(signUpRequest.getEmail());
-        userDetails.setCreatedBy("Sebito");
-        userDetails.setCreatedDate(DateTime.now());
+        Store store = new Store();
+        store.setEmail(signUpRequest.getEmail());
+        store.setCreatedBy("Sebito");
+        store.setCreatedDate(DateTime.now());
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user.setCreatedBy("Sebito");
         user.setCreatedDate(DateTime.now());
-        userDetails.setUser(user);
-        user.setUserDetails(userDetails);
+        store.setUser(user);
+        user.setStore(store);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByName(Constants.ROL_USUARIO)

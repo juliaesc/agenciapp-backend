@@ -26,7 +26,7 @@ public class User extends BaseAudit {
     private String password;
     @JsonManagedReference
     private Set<Role> roles;
-    private UserDetails userDetails;
+    private Store store;
     private Account account;
 
     public User() {
@@ -81,12 +81,12 @@ public class User extends BaseAudit {
     }
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    public UserDetails getUserDetails() {
-        return userDetails;
+    public Store getStore() {
+        return store;
     }
 
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
@@ -125,7 +125,7 @@ public class User extends BaseAudit {
         result.append("Fecha de modificación: " + this.getLastModifiedDate().toString("dd/MM/yyyy HH:mm:ss") + NEW_LINE);
         result.append("Habilitado: " + this.isEnabled() + NEW_LINE);
         result.append("Eliminado: " + this.isDeleted() + NEW_LINE);
-        result.append(this.getUserDetails().toString() + NEW_LINE);
+        result.append(this.getStore().toString() + NEW_LINE);
         result.append(this.getAccount().toString() + NEW_LINE);
 
         return result.toString();

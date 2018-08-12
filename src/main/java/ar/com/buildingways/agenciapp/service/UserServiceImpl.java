@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Recupera diariamente los datos de los usuarios habilitados para usar la aplicación.
-     * Actualiza las tablas Users, UserDetails y Accounts.
+     * Actualiza las tablas Users, Store y Accounts.
      */
     @Override
     public void updateUsers() {

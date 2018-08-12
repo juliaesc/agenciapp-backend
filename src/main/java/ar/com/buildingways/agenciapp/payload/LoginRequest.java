@@ -1,10 +1,11 @@
 package ar.com.buildingways.agenciapp.payload;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class LoginRequest {
 
-    @NotBlank
+    @NotNull
     private Long username;
 
     @NotBlank
