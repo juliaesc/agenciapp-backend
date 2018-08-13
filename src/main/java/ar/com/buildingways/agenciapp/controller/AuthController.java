@@ -91,8 +91,8 @@ public class AuthController {
         store.setCreatedBy("Sebito");
         store.setCreatedDate(DateTime.now());
         User user = new User();
-        user.setEmail(signUpRequest.getEmail());
         user.setUsername(signUpRequest.getUsername());
+        user.setEmail(signUpRequest.getEmail());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());

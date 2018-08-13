@@ -37,6 +37,7 @@ public abstract class BaseAudit implements Serializable {
     protected boolean enabled;
     protected boolean deleted;
 
+    @Column(columnDefinition = "datetime")
     public DateTime getCreatedDate() {
         return createdDate;
     }
@@ -45,6 +46,7 @@ public abstract class BaseAudit implements Serializable {
         this.createdDate = createdDate;
     }
 
+    @Column(columnDefinition = "datetime")
     public DateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -53,6 +55,7 @@ public abstract class BaseAudit implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    @Column(columnDefinition = "varchar(20)")
     public String getCreatedBy() {
         return createdBy;
     }
@@ -61,6 +64,7 @@ public abstract class BaseAudit implements Serializable {
         this.createdBy = createdBy;
     }
 
+    @Column(columnDefinition = "varchar(20)")
     public String getLastModifiedBy() {
         return lastModifiedBy;
     }
