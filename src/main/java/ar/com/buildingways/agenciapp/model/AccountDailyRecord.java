@@ -26,13 +26,13 @@ public class AccountDailyRecord {
 	private String game;
 	private int drawNumber;
 	private String type;
-	private DateTime updatedDate;
+	private DateTime lastModifiedDate;
 	
 	public AccountDailyRecord() {}
 
 	public AccountDailyRecord(Account account, String game, Integer drawNumber, DateTime dueDate,
                               double debt, double credit, double interest, String state, String currency, String type,
-                              DateTime updatedDate) {
+                              DateTime lastModifiedDate) {
 		this.account = account;
 		this.game = game;
 		this.drawNumber = drawNumber;
@@ -43,7 +43,7 @@ public class AccountDailyRecord {
 		this.state = state;
 		this.currency = currency;
 		this.type = type;
-		this.updatedDate = updatedDate;
+		this.lastModifiedDate = lastModifiedDate;
 	}
 	
 	@Id
@@ -137,12 +137,12 @@ public class AccountDailyRecord {
 		this.type = type;
 	}
 	
-	@Column(name = "updated_date", columnDefinition = "datetime")
-	public DateTime getUpdatedDate() {
-		return updatedDate;
+	@Column(name = "last_modified_date", columnDefinition = "datetime")
+	public DateTime getLastModifiedDate() {
+		return lastModifiedDate;
 	}
-	public void setUpdatedDate(DateTime updatedDate) {
-		this.updatedDate = updatedDate;
+	public void setLastModifiedDate(DateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class AccountDailyRecord {
 		StringBuilder result = new StringBuilder();
 	    String NEW_LINE = System.getProperty("line.separator");
 
-	    result.append("--- REGISTROS DIARIOS DE ESTADO DE CUENTA --- " + NEW_LINE);
+	    result.append("********** REGISTROS DIARIOS DE ESTADO DE CUENTA **********" + NEW_LINE);
 	    result.append("Tipo: " + this.getType() + " | ");
 	    result.append("Juego: " + this.getGame() + " | ");
 	    result.append("Nº sorteo: " + this.getDrawNumber() + " | ");
@@ -173,7 +173,7 @@ public class AccountDailyRecord {
 	    result.append("Intereses: " + this.getInterest() + " | ");
 	    result.append("Fecha de vencimiento: " + this.getDueDate().toString("dd/MM/yyyy") + " | ");
 	    result.append("Estado: " + this.getState() + " | ");
-	    result.append("Fecha de actualización: "+ this.getUpdatedDate().toString("dd/MM/yyyy HH:mm:ss"));
+	    result.append("Fecha de actualización: "+ this.getLastModifiedDate().toString("dd/MM/yyyy HH:mm:ss"));
 
 	    return result.toString();
 	}

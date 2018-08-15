@@ -33,10 +33,11 @@ public class Account extends BaseAudit {
 
 	public Account() {}
 	
-	public Account(int accountNumber, int branchNumber, String holder, char directDebit, String accountType, double grossIncomePercentage,
+	public Account(int accountNumber, User user, int branchNumber, String holder, char directDebit, String accountType, double grossIncomePercentage,
 			String cbu, String createdBy, DateTime createdDate, String lastModifiedBy,
 			DateTime lastModifiedDate, boolean enabled, boolean deleted) {
  		this.accountNumber = accountNumber;
+ 		this.user = user;
  		this.branchNumber = branchNumber;
  		this.holder = holder;
  		this.directDebit = directDebit;
@@ -153,14 +154,14 @@ public class Account extends BaseAudit {
 		StringBuilder result = new StringBuilder();
 	    String NEW_LINE = System.getProperty("line.separator");
 
-	    result.append("--- CUENTA ---" + NEW_LINE);
+	    result.append("********** CUENTA **********" + NEW_LINE);
+		result.append("Titular: " + this.getHolder() + NEW_LINE);
+		result.append("Tipo de cuenta: " + this.getAccountType() + NEW_LINE);
 	    result.append("Nº de cuenta: " + this.getAccountNumber() + NEW_LINE);
 	    result.append("Sucursal: " + this.getBranchNumber() + NEW_LINE);
-	    result.append("Titular: " + this.getHolder() + NEW_LINE);
+		result.append("CBU: " + this.getCbu() + NEW_LINE);
 	    result.append("Adherido al débito: " + this.getDirectDebit() + NEW_LINE);
-	    result.append("Tipo de cuenta: " + this.getAccountType() + NEW_LINE);
 	    result.append("% retención IIBB: " + this.getGrossIncomePercentage() + NEW_LINE);
-	    result.append("CBU: " + this.getCbu() + NEW_LINE);
 	    result.append(this.getAccountDailyRecords().toString() + NEW_LINE);
 
 	    return result.toString();

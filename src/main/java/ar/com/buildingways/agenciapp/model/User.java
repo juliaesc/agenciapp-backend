@@ -40,8 +40,11 @@ public class User extends BaseAudit {
     public User() {
     }
 
-    public User(Long username, String createdBy, DateTime createdDate) {
+    public User(Long username, String firstName, String lastName, String email, String createdBy, DateTime createdDate) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
     }

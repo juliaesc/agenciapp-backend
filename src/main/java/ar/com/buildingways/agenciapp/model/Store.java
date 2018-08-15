@@ -125,9 +125,9 @@ public class Store extends BaseAudit {
         StringBuilder result = new StringBuilder();
         String NEW_LINE = System.getProperty("line.separator");
 
-        result.append("--- DETALLES ---" + NEW_LINE);
+        result.append("********** DETALLES **********" + NEW_LINE);
         result.append("Domicilio: " + this.getAddress() + NEW_LINE);
-        result.append("Propietario: " + this.getUser().getFirstName() + " " + this.getUser().getLastName() + NEW_LINE);
+        result.append("Titular: " + this.getUser().getFirstName() + " " + this.getUser().getLastName() + NEW_LINE);
         result.append("Nombre de fantasía: " + this.getTradeName() + NEW_LINE);
         result.append("CUIT: " + this.getCuit() + NEW_LINE);
         result.append("Comisionista: " + this.getCommissionAgent() + NEW_LINE);
