@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @EntityScan(basePackageClasses = {
 		AgenciAppBackendApplication.class,
 })

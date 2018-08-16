@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
             ((BigDecimal) item[8]).longValue(), ((BigDecimal) item[6]).intValue(), ((BigDecimal) item[7]).intValue(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.isEnabled(), user.isDeleted());
+        store.setUserId(user.getId());
         return store;
     }
 
@@ -84,6 +85,7 @@ public class UserServiceImpl implements UserService {
                 (char) item[14], (String) item[10], ((BigDecimal) item[15]).doubleValue(), (String) item[13],
                 user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
                 user.isEnabled(), user.isDeleted());
+        account.setUserId(user.getId());
         return account;
     }
 

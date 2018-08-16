@@ -24,7 +24,7 @@ public class UpdateAccountDailyRecords {
      *	Actualiza la tabla AccountDailyRecords.
      * Ejecución: de lunes a sábado a las 01:30:00 a.m.
      */
-    //@Scheduled(cron = "${scheduling.dailyrecords.cron}")
+    @Scheduled(cron = "${scheduling.dailyrecords.cron}")
     public void updateAccountDailyRecords() {
         logger.info("Cron Task | Fecha y hora de ejecución: {}", dateTimeFormatter.format(LocalDateTime.now()));
         accountDailyRecordService.updateAccountDailyRecords();
