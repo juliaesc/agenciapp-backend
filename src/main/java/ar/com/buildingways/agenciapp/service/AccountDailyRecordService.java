@@ -4,8 +4,8 @@ import ar.com.buildingways.agenciapp.model.User;
 
 public interface AccountDailyRecordService {
 		
-	public void updateAccountDailyRecords();
+	void updateAccountDailyRecords();
 	
-	public double getAccountDailySettlement(User user);
+	//public double getAccountDailySettlement(User user);
 
 }

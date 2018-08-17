@@ -6,11 +6,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "ACCOUNT_DAILY_RECORDS")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
   				  property = "id")
 public class AccountDailyRecord {
  

@@ -24,7 +24,7 @@ public class UpdateUsers {
      *	Actualiza las tablas Users, Stores y Accounts.
      * Ejecución: de lunes a sábado a las 01:00:00 a.m.
      */
-    @Scheduled(cron = "${scheduling.users.cron}")
+//    @Scheduled(cron = "${scheduling.users.cron}")
     public void updateUsers() {
         logger.info("Cron Task | Fecha y hora de ejecución: {}", dateTimeFormatter.format(LocalDateTime.now()));
         userService.updateUsers();
