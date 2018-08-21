@@ -36,6 +36,8 @@ INNER JOIN CCorrientes.dbo.v_MacroliquidacionLiquidacion ml ON l.c_Liquidacion =
 INNER JOIN CCorrientes.dbo.v_MacroLiquidacion m ON ml.c_MacroLiquidacion = m.c_MacroLiquidacion
 WHERE m.c_operacion in (SELECT distinct c_operacion as operaciones FROM CCorrientes.dbo.v_MacroLiquidacion
 where CONVERT(DATE,f_macroliquidacion) = @fecha_actual and c_operatoria in ('DA', 'CA', 'CT', 'LI', 'LL', 'LV'))
+--Legajos disponibles en Desarrollo en CoNcesionarios
+and l.n_legajo in (707090,700083,700095,700058)
 
 SELECT @rc = @@error,@CntFilas = @@RowCount
 
